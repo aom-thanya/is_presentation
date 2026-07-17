@@ -5,10 +5,9 @@ import { fadeUpVariants } from "../../design-system/animations";
 import { cn } from "../../design-system/cn";
 import { CheckCircle } from "lucide-react";
 
-export function Scene5LiveWalkthrough() {
-  const { currentSceneIndex, currentStepIndex } = usePresentationStore();
-  const isActive = currentSceneIndex === 5;
-
+export function Scene5LiveWalkthrough({ stepIndex }: { stepIndex: number }) {
+  
+  
   const walkthroughSteps = [
     { step: 1, title: "Create Campaign Brief", msg: "Campaign information is entered only once.", obs: "The Campaign Record will be reused in every following step." },
     { step: 2, title: "Generate Campaign Record", msg: "The system processes and standardizes the brief.", obs: "A central record is created as the source of truth." },
@@ -26,20 +25,20 @@ export function Scene5LiveWalkthrough() {
     "One Campaign. One Data. One Source of Truth."
   ];
 
-  const isGuidePhase = currentStepIndex >= 0 && currentStepIndex <= 7;
-  const isTakeawaysPhase = currentStepIndex >= 8;
+  const isGuidePhase = stepIndex >= 0 && stepIndex <= 7;
+  const isTakeawaysPhase = stepIndex >= 8;
 
-  const activeGuideStep = isGuidePhase && currentStepIndex > 0 ? walkthroughSteps[currentStepIndex - 1] : null;
+  const activeGuideStep = isGuidePhase && stepIndex > 0 ? walkthroughSteps[stepIndex - 1] : null;
 
   return (
-    <Scene id="slide5-live-walkthrough" isActive={isActive} theme="light">
+    <Scene id="slide5-live-walkthrough"  theme="light">
       <div className="flex h-full w-full">
         
         {/* Left Panel: Presentation Guide */}
         <div className="w-1/3 bg-surface border-r border-border h-full flex flex-col pt-12 px-8 relative z-20 shadow-md">
           
           <AnimatePresence mode="wait">
-            {currentStepIndex === 0 && (
+            {stepIndex === 0 && (
               <motion.div key="intro" className="flex flex-col h-full justify-center" variants={fadeUpVariants} initial="initial" animate="animate" exit="exit">
                 <h2 className="text-4xl font-bold text-text-primary leading-tight mb-4">Live Product<br/>Walkthrough</h2>
                 <p className="text-xl text-text-secondary">Demonstrate how one Campaign flows through the system using the real product.</p>
@@ -73,7 +72,7 @@ export function Scene5LiveWalkthrough() {
                 <h3 className="text-3xl font-bold text-text-primary mb-8">Key Takeaways</h3>
                 <div className="flex flex-col gap-4">
                   {takeaways.map((takeaway, idx) => {
-                    const isVisible = currentStepIndex >= 8 + idx;
+                    const isVisible = stepIndex >= 8 + idx;
                     return (
                       <AnimatePresence key={idx}>
                         {isVisible && (

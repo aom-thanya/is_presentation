@@ -4,12 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
 import { MessageSquare, Table, FileSpreadsheet, AlertTriangle, CheckCircle, Search, FileText, FileArchive, FolderKanban } from "lucide-react";
 
-export function Scene2Personas() {
-  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
-  const isActive = currentSceneIndex === 2;
-
+export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
+  const { goToStep } = usePresentationStore();
+  
   // Overview Phase
-  const isOverview = currentStepIndex === 0;
+  const isOverview = stepIndex === 0;
 
   // Personas Data
   const personas = [
@@ -72,11 +71,11 @@ export function Scene2Personas() {
     }
   ];
 
-  const activePersona = personas.find(p => currentStepIndex >= p.startStep && currentStepIndex <= p.endStep);
-  const isSecondaryUsers = currentStepIndex >= 25;
+  const activePersona = personas.find(p => stepIndex >= p.startStep && stepIndex <= p.endStep);
+  const isSecondaryUsers = stepIndex >= 25;
 
   return (
-    <Scene id="slide2-personas" isActive={isActive} theme="light">
+    <Scene id="slide2-personas"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         
         {/* Main Title (Only in overview or secondary users) */}
@@ -164,7 +163,7 @@ export function Scene2Personas() {
                   </motion.h3>
 
                   <AnimatePresence>
-                    {currentStepIndex >= activePersona.startStep + 1 && (
+                    {stepIndex >= activePersona.startStep + 1 && (
                       <motion.div
                         className="mt-8 px-8 py-6 bg-primary-soft border border-primary/20 rounded-card relative"
                         variants={fadeUpVariants} initial="initial" animate="animate"
@@ -194,8 +193,8 @@ export function Scene2Personas() {
                         // Step 5: Gain 1 (startStep + 4)
                         const pStep = activePersona.startStep + 1 + idx;
                         const gStep = activePersona.startStep + 4 + idx;
-                        const showPain = currentStepIndex >= pStep && currentStepIndex < gStep;
-                        const showGain = currentStepIndex >= gStep;
+                        const showPain = stepIndex >= pStep && stepIndex < gStep;
+                        const showGain = stepIndex >= gStep;
 
                         return (
                           <div key={idx} className="relative h-20 w-full">
@@ -233,7 +232,7 @@ export function Scene2Personas() {
                     <div className="flex-1 flex items-center justify-center relative bg-surface-muted rounded-panel overflow-hidden border border-border">
                       
                       {/* Sales: Structured Brief */}
-                      {activePersona.id === "sales" && currentStepIndex >= activePersona.startStep + 7 && (
+                      {activePersona.id === "sales" && stepIndex >= activePersona.startStep + 7 && (
                         <motion.div 
                           className="w-3/4 bg-surface rounded-card shadow-md border border-border p-6 flex flex-col gap-4"
                           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -246,10 +245,10 @@ export function Scene2Personas() {
                       )}
 
                       {/* Buyer: Sources Merging */}
-                      {activePersona.id === "buyer" && currentStepIndex >= activePersona.startStep + 4 && (
+                      {activePersona.id === "buyer" && stepIndex >= activePersona.startStep + 4 && (
                         <div className="relative w-full h-full flex items-center justify-center">
                           <AnimatePresence>
-                            {currentStepIndex < activePersona.startStep + 7 && (
+                            {stepIndex < activePersona.startStep + 7 && (
                               <>
                                 <motion.div exit={{ scale: 0, opacity: 0, x: 50, y: 50 }} className="absolute top-1/4 left-1/4 w-12 h-12 bg-surface shadow rounded-full flex items-center justify-center text-text-subtle"><Search size={20}/></motion.div>
                                 <motion.div exit={{ scale: 0, opacity: 0, x: -50, y: 50 }} className="absolute top-1/4 right-1/4 w-12 h-12 bg-surface shadow rounded-full flex items-center justify-center text-text-subtle"><Table size={20}/></motion.div>
@@ -258,7 +257,7 @@ export function Scene2Personas() {
                             )}
                           </AnimatePresence>
                           <AnimatePresence>
-                            {currentStepIndex >= activePersona.startStep + 6 && (
+                            {stepIndex >= activePersona.startStep + 6 && (
                               <motion.div 
                                 className="w-64 h-80 bg-surface rounded-card shadow-md border border-border flex flex-col overflow-hidden"
                                 initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
@@ -283,18 +282,18 @@ export function Scene2Personas() {
                       )}
 
                       {/* Planner: Auto Generation */}
-                      {activePersona.id === "planner" && currentStepIndex >= activePersona.startStep + 4 && (
+                      {activePersona.id === "planner" && stepIndex >= activePersona.startStep + 4 && (
                         <div className="relative w-full h-full flex flex-col items-center justify-center">
                           <motion.div 
                             className="w-40 h-32 bg-primary text-primary-foreground rounded-card shadow-md flex items-center justify-center font-bold text-center z-10"
                             initial={{ y: 0 }}
-                            animate={{ y: currentStepIndex >= activePersona.startStep + 6 ? -60 : 0 }}
+                            animate={{ y: stepIndex >= activePersona.startStep + 6 ? -60 : 0 }}
                           >
                             Campaign<br/>Record
                           </motion.div>
 
                           <AnimatePresence>
-                            {currentStepIndex >= activePersona.startStep + 6 && (
+                            {stepIndex >= activePersona.startStep + 6 && (
                               <motion.div className="absolute top-[60%] flex gap-8 w-full justify-center">
                                 <motion.div 
                                   className="w-32 h-40 bg-surface rounded-card shadow-md border border-border flex flex-col items-center p-4"

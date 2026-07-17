@@ -4,22 +4,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants } from "../../design-system/animations";
 import { Database } from "lucide-react";
 
-export function Scene0Cover() {
-  const { currentSceneIndex, currentStepIndex } = usePresentationStore();
-  const isActive = currentSceneIndex === 0;
-
+export function Scene0Cover({ stepIndex }: { stepIndex: number }) {
+  
+  
   // step 0: Central Object (with subtle data lines connecting to it)
   // step 1: Project Title
   // step 2: Tagline
   // step 3: "Scroll / Click to begin"
 
   return (
-    <Scene id="cover" isActive={isActive} theme="light">
+    <Scene id="cover"  theme="light">
       <div className="flex flex-col items-center justify-center h-full text-center relative w-full">
         
         {/* Subtle Data Lines Background */}
         <AnimatePresence>
-          {currentStepIndex >= 0 && (
+          {stepIndex >= 0 && (
             <motion.div 
               className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10"
               initial={{ opacity: 0 }}
@@ -39,7 +38,7 @@ export function Scene0Cover() {
           
           {/* Step 0: Central Campaign Data Object */}
           <AnimatePresence>
-            {currentStepIndex >= 0 && (
+            {stepIndex >= 0 && (
               <motion.div
                 className="w-24 h-24 bg-surface rounded-card shadow-md border border-border flex flex-col items-center justify-center text-primary"
                 initial={{ scale: 0.8, opacity: 0, y: 20 }}
@@ -55,7 +54,7 @@ export function Scene0Cover() {
           <div className="flex flex-col items-center gap-4 h-[120px]">
             {/* Step 1: Project Title */}
             <AnimatePresence>
-              {currentStepIndex >= 1 && (
+              {stepIndex >= 1 && (
                 <motion.h1
                   className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary"
                   variants={fadeUpVariants}
@@ -70,7 +69,7 @@ export function Scene0Cover() {
 
             {/* Step 2: Tagline */}
             <AnimatePresence>
-              {currentStepIndex >= 2 && (
+              {stepIndex >= 2 && (
                 <motion.p
                   className="text-lg sm:text-xl lg:text-2xl font-medium text-primary tracking-wide"
                   variants={fadeUpVariants}
@@ -87,7 +86,7 @@ export function Scene0Cover() {
 
         {/* Step 3: Scroll Instruction */}
         <AnimatePresence>
-          {currentStepIndex >= 3 && (
+          {stepIndex >= 3 && (
             <motion.div
               className="absolute bottom-16 text-sm text-text-muted font-medium tracking-widest uppercase"
               initial={{ opacity: 0, y: 10 }}

@@ -5,10 +5,9 @@ import { fadeUpVariants, staggerContainerVariants } from "../../design-system/an
 import { cn } from "../../design-system/cn";
 import { Database, FileText, Search, Users, FileSpreadsheet, FileArchive, LineChart, AlertCircle, Play, ArrowRight, Settings } from "lucide-react";
 
-export function Scene4SolutionDesign() {
-  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
-  const isActive = currentSceneIndex === 4;
-
+export function Scene4SolutionDesign({ stepIndex }: { stepIndex: number }) {
+  const { goToStep } = usePresentationStore();
+  
   const flowNodes = [
     { id: "brief", label: "Campaign Brief", icon: FileText },
     { id: "central", label: "Central Campaign Record", icon: Database },
@@ -35,20 +34,20 @@ export function Scene4SolutionDesign() {
   ];
 
   // Phase logic
-  const isFlowPhase = currentStepIndex >= 0 && currentStepIndex <= 6;
-  const isFoundationPhase = currentStepIndex >= 7 && currentStepIndex <= 13;
-  const activeConsequence = isFoundationPhase ? consequences.find(c => currentStepIndex >= c.step) : null;
-  const activeConsequenceList = consequences.filter(c => currentStepIndex >= c.step);
+  const isFlowPhase = stepIndex >= 0 && stepIndex <= 6;
+  const isFoundationPhase = stepIndex >= 7 && stepIndex <= 13;
+  const activeConsequence = isFoundationPhase ? consequences.find(c => stepIndex >= c.step) : null;
+  const activeConsequenceList = consequences.filter(c => stepIndex >= c.step);
 
-  const isFeaturesPhase = currentStepIndex >= 14 && currentStepIndex <= 25;
-  const activeFeature = isFeaturesPhase ? features.find(f => currentStepIndex >= f.startStep && currentStepIndex <= f.startStep + 2) : null;
-  const featureSubStep = activeFeature ? currentStepIndex - activeFeature.startStep : -1; // 0=Input, 1=Process, 2=Output
+  const isFeaturesPhase = stepIndex >= 14 && stepIndex <= 25;
+  const activeFeature = isFeaturesPhase ? features.find(f => stepIndex >= f.startStep && stepIndex <= f.startStep + 2) : null;
+  const featureSubStep = activeFeature ? stepIndex - activeFeature.startStep : -1; // 0=Input, 1=Process, 2=Output
 
-  const isFinalPhase = currentStepIndex >= 26;
-  const isFullyReused = currentStepIndex >= 27;
+  const isFinalPhase = stepIndex >= 26;
+  const isFullyReused = stepIndex >= 27;
 
   return (
-    <Scene id="slide4-solution-design" isActive={isActive} theme="light">
+    <Scene id="slide4-solution-design"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[6vh] w-full max-w-full mx-auto relative px-8">
         
         {/* Title */}
@@ -74,7 +73,7 @@ export function Scene4SolutionDesign() {
                 {isFoundationPhase && (
                   <motion.div className="absolute top-0 text-center z-20" variants={fadeUpVariants} initial="initial" animate="animate">
                     <h3 className="text-2xl font-bold text-text-primary mb-2">Brief ไม่ใช่ Hero Feature</h3>
-                    {currentStepIndex >= 8 && <p className="text-xl text-primary font-medium">แต่เป็น Data Foundation ของ Feature อื่น</p>}
+                    {stepIndex >= 8 && <p className="text-xl text-primary font-medium">แต่เป็น Data Foundation ของ Feature อื่น</p>}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -89,19 +88,19 @@ export function Scene4SolutionDesign() {
                 <motion.div 
                   className="absolute top-8 left-8 h-2 bg-primary rounded-full -z-10"
                   initial={{ width: "0%" }}
-                  animate={{ width: `${(Math.min(currentStepIndex, 6) / (flowNodes.length - 1)) * 100}%` }}
+                  animate={{ width: `${(Math.min(stepIndex, 6) / (flowNodes.length - 1)) * 100}%` }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                   style={{ maxWidth: "calc(100% - 4rem)" }}
                 />
 
                 {/* The flowing data object (Database Icon) */}
                 <AnimatePresence>
-                  {currentStepIndex >= 1 && currentStepIndex <= 6 && (
+                  {stepIndex >= 1 && stepIndex <= 6 && (
                     <motion.div
                       className="absolute top-[20px] w-10 h-10 rounded-full flex items-center justify-center shadow-lg z-20"
                       style={{ backgroundColor: "var(--color-primary)", color: "var(--color-primary-foreground)" }}
                       initial={{ left: "0%" }}
-                      animate={{ left: `calc(${(currentStepIndex / (flowNodes.length - 1)) * 100}% - 20px)` }}
+                      animate={{ left: `calc(${(stepIndex / (flowNodes.length - 1)) * 100}% - 20px)` }}
                       transition={{ type: "spring", stiffness: 100, damping: 15 }}
                     >
                       <Database size={20} />
@@ -111,7 +110,7 @@ export function Scene4SolutionDesign() {
 
                 {/* Flow Nodes */}
                 {flowNodes.map((node, idx) => {
-                  const isRevealed = currentStepIndex >= idx;
+                  const isRevealed = stepIndex >= idx;
                   const isBlocked = activeConsequenceList.some(c => c.targetId === node.id || c.secondaryTarget === node.id);
                   const isCentral = node.id === "central";
 

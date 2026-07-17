@@ -54,41 +54,40 @@ const painPoints = [
   }
 ];
 
-export function Scene1BusinessProblem() {
-  const { currentSceneIndex, currentStepIndex } = usePresentationStore();
-  const isActive = currentSceneIndex === 1;
-
+export function Scene1BusinessProblem({ stepIndex }: { stepIndex: number }) {
+  
+  
   // Phase 1: Workflow Reveal (Steps 0 - 7)
   // Step 0: Title only
-  // Steps 1-7: Reveal roles (activeRoleIndex = currentStepIndex - 1)
-  const activeRoleIndex = Math.min(currentStepIndex - 1, 6);
+  // Steps 1-7: Reveal roles (activeRoleIndex = stepIndex - 1)
+  const activeRoleIndex = Math.min(stepIndex - 1, 6);
   
   // Phase 2: Conflict Statement (Step 8)
-  const showConflict = currentStepIndex >= 8;
+  const showConflict = stepIndex >= 8;
 
   // Phase 3: Hidden Costs (Steps 9 - 18)
   // 5 pains, 2 steps each. 
   // Step 9: Pain 0
   // Step 10: Effect 0
-  const painPhaseActive = currentStepIndex >= 9 && currentStepIndex <= 18;
-  const painIndex = painPhaseActive ? Math.floor((currentStepIndex - 9) / 2) : -1;
-  const showEffect = painPhaseActive ? (currentStepIndex - 9) % 2 === 1 : false;
+  const painPhaseActive = stepIndex >= 9 && stepIndex <= 18;
+  const painIndex = painPhaseActive ? Math.floor((stepIndex - 9) / 2) : -1;
+  const showEffect = painPhaseActive ? (stepIndex - 9) % 2 === 1 : false;
   const currentPainData = painIndex >= 0 ? painPoints[painIndex] : null;
   const painActiveRoles = currentPainData?.activeRoles || [];
 
   // Phase 4: Root Cause (Steps 19 - 21)
-  const rootCausePhaseActive = currentStepIndex >= 19;
+  const rootCausePhaseActive = stepIndex >= 19;
   const dimWorkflow = rootCausePhaseActive;
-  const showEnglishRootCause = currentStepIndex >= 20;
-  const showThaiRootCause = currentStepIndex >= 21;
+  const showEnglishRootCause = stepIndex >= 20;
+  const showThaiRootCause = stepIndex >= 21;
 
   return (
-    <Scene id="slide1-business-problem" isActive={isActive} theme="light">
+    <Scene id="slide1-business-problem"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative">
         
         {/* Title */}
         <AnimatePresence>
-          {currentStepIndex >= 0 && !rootCausePhaseActive && (
+          {stepIndex >= 0 && !rootCausePhaseActive && (
             <motion.h2
               className="text-3xl sm:text-4xl text-text-primary font-bold mb-8"
               variants={fadeUpVariants}

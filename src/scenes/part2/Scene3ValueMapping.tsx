@@ -5,10 +5,9 @@ import { fadeUpVariants, staggerContainerVariants } from "../../design-system/an
 import { cn } from "../../design-system/cn";
 import { ArrowRight, Database, FileText, CheckCircle, Search, FileArchive, LayoutDashboard } from "lucide-react";
 
-export function Scene3ValueMapping() {
-  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
-  const isActive = currentSceneIndex === 3;
-
+export function Scene3ValueMapping({ stepIndex }: { stepIndex: number }) {
+  const { goToStep } = usePresentationStore();
+  
   const mappings = [
     { id: 1, startStep: 1, pain: "Requirement ตกหล่นและต้องถามซ้ำ", need: "ต้องมีข้อมูล Campaign ที่ครบและพร้อมส่งต่อ", feature: "Structured Campaign Brief", outcome: "ลด Clarification และ Rework" },
     { id: 2, startStep: 5, pain: "Buyer ต้องค้นหาจากหลายแหล่ง", need: "ต้องเข้าถึง Influencer Information ได้จากจุดเดียว", feature: "Search by Name / Image", outcome: "ลด Time to Shortlist" },
@@ -27,19 +26,19 @@ export function Scene3ValueMapping() {
   ];
 
   // Phase logic
-  const isMappingPhase = currentStepIndex >= 0 && currentStepIndex <= 20;
-  const activeMappingIndex = isMappingPhase && currentStepIndex > 0 ? Math.floor((currentStepIndex - 1) / 4) : -1;
+  const isMappingPhase = stepIndex >= 0 && stepIndex <= 20;
+  const activeMappingIndex = isMappingPhase && stepIndex > 0 ? Math.floor((stepIndex - 1) / 4) : -1;
   const activeMapping = activeMappingIndex >= 0 ? mappings[activeMappingIndex] : null;
-  const mappingStep = activeMapping ? currentStepIndex - activeMapping.startStep : -1;
+  const mappingStep = activeMapping ? stepIndex - activeMapping.startStep : -1;
 
-  const isBeforeAfterPhase = currentStepIndex >= 21 && currentStepIndex <= 22;
-  const isAfterState = currentStepIndex >= 22;
+  const isBeforeAfterPhase = stepIndex >= 21 && stepIndex <= 22;
+  const isAfterState = stepIndex >= 22;
   
-  const isOutcomesPhase = currentStepIndex >= 23;
-  const isEvidencePhase = currentStepIndex >= 29;
+  const isOutcomesPhase = stepIndex >= 23;
+  const isEvidencePhase = stepIndex >= 29;
 
   return (
-    <Scene id="slide3-value-mapping" isActive={isActive} theme="light">
+    <Scene id="slide3-value-mapping"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[6vh] w-full max-w-full mx-auto relative px-8">
         
         <AnimatePresence mode="wait">
@@ -62,7 +61,7 @@ export function Scene3ValueMapping() {
 
         {/* Mappings Phase */}
         <AnimatePresence mode="wait">
-          {isMappingPhase && currentStepIndex > 0 && activeMapping && (
+          {isMappingPhase && stepIndex > 0 && activeMapping && (
             <motion.div key="mapping-content" className="w-full flex-1 flex flex-col items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               
               {/* Navigation Indicators */}
@@ -200,7 +199,7 @@ export function Scene3ValueMapping() {
                       <motion.div className="flex flex-col gap-4" variants={staggerContainerVariants} initial="initial" animate="animate">
                         <h3 className="text-2xl font-bold text-text-primary mb-2">Expected Business Outcomes</h3>
                         {outcomesList.map((outcome, idx) => {
-                          const isVisible = currentStepIndex >= 23 + idx;
+                          const isVisible = stepIndex >= 23 + idx;
                           return (
                             <AnimatePresence key={idx}>
                               {isVisible && (

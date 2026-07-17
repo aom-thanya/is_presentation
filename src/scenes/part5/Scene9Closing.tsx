@@ -5,11 +5,10 @@ import { fadeUpVariants } from "../../design-system/animations";
 import { cn } from "../../design-system/cn";
 import { Database, FileText, Search, Users, FileSpreadsheet, FileArchive, Zap, LineChart, RefreshCcw, ExternalLink } from "lucide-react";
 
-export function Scene9Closing() {
-  const { currentSceneIndex, currentStepIndex, goToScene, resetPresentation } = usePresentationStore();
-  const isActive = currentSceneIndex === 9;
-
-  const isFinalState = currentStepIndex >= 7;
+export function Scene9Closing({ stepIndex }: { stepIndex: number }) {
+  const { goToScene, resetPresentation } = usePresentationStore();
+  
+  const isFinalState = stepIndex >= 7;
 
   // Orbiting Modules
   const modules = [
@@ -23,7 +22,7 @@ export function Scene9Closing() {
   ];
 
   return (
-    <Scene id="slide9-closing" isActive={isActive} theme="light">
+    <Scene id="slide9-closing"  theme="light">
       <div className="flex flex-col items-center justify-center h-full w-full max-w-full mx-auto relative px-8 overflow-hidden">
         
         {/* Animated Central Data Hub System */}
@@ -99,25 +98,25 @@ export function Scene9Closing() {
         <div className="relative z-30 flex flex-col items-center justify-center text-center max-w-4xl min-h-[400px]">
           
           <AnimatePresence mode="wait">
-            {!isFinalState && currentStepIndex > 0 && (
+            {!isFinalState && stepIndex > 0 && (
               <motion.div 
                 key="progressive-text" 
                 className="flex flex-col gap-6 items-center justify-center bg-surface/60 backdrop-blur-md p-12 rounded-[2rem] border border-border/50 shadow-xl"
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20, scale: 0.95 }}
               >
-                {currentStepIndex >= 1 && (
+                {stepIndex >= 1 && (
                   <motion.p variants={fadeUpVariants} initial="initial" animate="animate" className="text-2xl text-text-secondary font-medium">
                     Today, we transformed Campaign Information into Structured Campaign Data.
                   </motion.p>
                 )}
                 
-                {currentStepIndex >= 2 && (
+                {stepIndex >= 2 && (
                   <motion.p variants={fadeUpVariants} initial="initial" animate="animate" className="text-2xl text-text-secondary font-medium">
                     The same Campaign Data can be reused across every business step.
                   </motion.p>
                 )}
                 
-                {currentStepIndex >= 3 && (
+                {stepIndex >= 3 && (
                   <motion.p variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl text-text-primary font-bold mt-4">
                     Instead of documents driving the workflow,<br/>
                     <span className="text-primary">Data drives the workflow.</span>
@@ -125,9 +124,9 @@ export function Scene9Closing() {
                 )}
 
                 <div className="flex gap-4 mt-8">
-                  {currentStepIndex >= 4 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-text-primary">One Campaign.</motion.span>}
-                  {currentStepIndex >= 5 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-text-primary">One Data.</motion.span>}
-                  {currentStepIndex >= 6 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-primary">One Source of Truth.</motion.span>}
+                  {stepIndex >= 4 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-text-primary">One Campaign.</motion.span>}
+                  {stepIndex >= 5 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-text-primary">One Data.</motion.span>}
+                  {stepIndex >= 6 && <motion.span variants={fadeUpVariants} initial="initial" animate="animate" className="text-3xl font-black uppercase tracking-tight text-primary">One Source of Truth.</motion.span>}
                 </div>
               </motion.div>
             )}
@@ -154,7 +153,7 @@ export function Scene9Closing() {
                   className="flex gap-6 mt-16"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5, duration: 1 }}
                 >
-                  {currentStepIndex >= 8 && (
+                  {stepIndex >= 8 && (
                     <button 
                       onClick={resetPresentation}
                       className="flex items-center gap-2 px-8 py-4 bg-surface-muted hover:bg-border text-text-secondary hover:text-text-primary rounded-full transition-colors font-bold pointer-events-auto"
@@ -162,7 +161,7 @@ export function Scene9Closing() {
                       <RefreshCcw size={18} /> Restart Presentation
                     </button>
                   )}
-                  {currentStepIndex >= 9 && (
+                  {stepIndex >= 9 && (
                     <button 
                       onClick={() => goToScene(5)} // Jump to Live Walkthrough (Scene index 5)
                       className="flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition-colors font-bold shadow-lg shadow-primary/30 pointer-events-auto"

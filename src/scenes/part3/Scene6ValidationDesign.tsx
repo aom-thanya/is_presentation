@@ -5,10 +5,9 @@ import { fadeUpVariants, staggerContainerVariants } from "../../design-system/an
 import { cn } from "../../design-system/cn";
 import { CheckCircle, Info, LayoutTemplate } from "lucide-react";
 
-export function Scene6ValidationDesign() {
-  const { currentSceneIndex, currentStepIndex } = usePresentationStore();
-  const isActive = currentSceneIndex === 6;
-
+export function Scene6ValidationDesign({ stepIndex }: { stepIndex: number }) {
+  
+  
   const personas = ["Sales", "Buyer", "Planner"];
   
   const metrics = [
@@ -29,16 +28,16 @@ export function Scene6ValidationDesign() {
   ];
 
   // Phase logic
-  const isTargetPhase = currentStepIndex >= 1 && currentStepIndex <= 2;
-  const isPrinciplePhase = currentStepIndex >= 3 && currentStepIndex <= 4;
-  const isMetricsPhase = currentStepIndex >= 5 && currentStepIndex <= 10;
-  const isMethodPhase = currentStepIndex >= 11 && currentStepIndex <= 15;
-  const isFinalPhase = currentStepIndex >= 16;
+  const isTargetPhase = stepIndex >= 1 && stepIndex <= 2;
+  const isPrinciplePhase = stepIndex >= 3 && stepIndex <= 4;
+  const isMetricsPhase = stepIndex >= 5 && stepIndex <= 10;
+  const isMethodPhase = stepIndex >= 11 && stepIndex <= 15;
+  const isFinalPhase = stepIndex >= 16;
   
-  const showBeforeAfter = currentStepIndex >= 13 && currentStepIndex <= 15; // Shows up when comparing
+  const showBeforeAfter = stepIndex >= 13 && stepIndex <= 15; // Shows up when comparing
 
   return (
-    <Scene id="slide6-validation-design" isActive={isActive} theme="light">
+    <Scene id="slide6-validation-design"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         
         {/* Title */}
@@ -59,7 +58,7 @@ export function Scene6ValidationDesign() {
                   ทดสอบกับผู้ใช้ที่ตรงกับ Primary Persona
                 </h3>
                 <AnimatePresence>
-                  {currentStepIndex >= 2 && (
+                  {stepIndex >= 2 && (
                     <motion.div className="flex gap-6" variants={staggerContainerVariants} initial="initial" animate="animate">
                       {personas.map((persona, idx) => (
                         <motion.div key={idx} variants={fadeUpVariants} className="px-8 py-4 bg-primary text-primary-foreground font-bold text-xl rounded-card shadow-sm">
@@ -85,7 +84,7 @@ export function Scene6ValidationDesign() {
                 )}
 
                 <AnimatePresence>
-                  {(currentStepIndex >= 4 || isFinalPhase) && (
+                  {(stepIndex >= 4 || isFinalPhase) && (
                     <motion.h2 
                       className={cn(
                         "font-bold text-text-primary leading-tight transition-all duration-700",
@@ -110,7 +109,7 @@ export function Scene6ValidationDesign() {
                 <h3 className="text-2xl font-bold text-text-primary mb-8 text-center">Validation Metrics</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {metrics.map((metric, idx) => {
-                    const isVisible = currentStepIndex >= 5 + idx;
+                    const isVisible = stepIndex >= 5 + idx;
                     return (
                       <AnimatePresence key={idx}>
                         {isVisible && (
@@ -147,8 +146,8 @@ export function Scene6ValidationDesign() {
                 <div className="w-1/2 flex flex-col gap-4">
                   <h3 className="text-2xl font-bold text-text-primary mb-4">Validation Process</h3>
                   {methods.map((method, idx) => {
-                    const isVisible = currentStepIndex >= 11 + idx;
-                    const isActive = currentStepIndex === 11 + idx;
+                    const isVisible = stepIndex >= 11 + idx;
+                    const isActive = stepIndex === 11 + idx;
                     return (
                       <AnimatePresence key={idx}>
                         {isVisible && (

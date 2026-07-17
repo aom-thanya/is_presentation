@@ -5,18 +5,17 @@ import { fadeUpVariants, staggerContainerVariants } from "../../design-system/an
 import { cn } from "../../design-system/cn";
 import { CheckCircle, BrainCircuit } from "lucide-react";
 
-export function Scene8Roadmap() {
-  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
-  const isActive = currentSceneIndex === 8;
-
+export function Scene8Roadmap({ stepIndex }: { stepIndex: number }) {
+  const { goToStep } = usePresentationStore();
+  
   // Phase logic
-  const isOverview = currentStepIndex === 0;
-  const isPhase1 = currentStepIndex === 1;
-  const isPhase2 = currentStepIndex >= 2 && currentStepIndex <= 8;
-  const isPhase3 = currentStepIndex >= 9 && currentStepIndex <= 11;
+  const isOverview = stepIndex === 0;
+  const isPhase1 = stepIndex === 1;
+  const isPhase2 = stepIndex >= 2 && stepIndex <= 8;
+  const isPhase3 = stepIndex >= 9 && stepIndex <= 11;
 
   return (
-    <Scene id="slide8-roadmap" isActive={isActive} theme="light">
+    <Scene id="slide8-roadmap"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         
         {/* Header */}
@@ -94,33 +93,33 @@ export function Scene8Roadmap() {
                           <div className="flex flex-col gap-4">
                             
                             {/* Idea Review */}
-                            {currentStepIndex >= 3 && (
+                            {stepIndex >= 3 && (
                               <div className="p-4 bg-info/5 rounded-xl border border-info/20">
                                 <h4 className="font-bold text-info flex items-center gap-2 mb-3"><BrainCircuit size={16}/> AI Content Idea Review</h4>
                                 <div className="text-sm font-medium text-text-secondary mb-2">Input: <span className="font-normal">Working Brief, Content Idea</span></div>
-                                {currentStepIndex >= 4 && (
+                                {stepIndex >= 4 && (
                                   <div className="text-sm font-medium text-info">Output: <span className="font-normal">Idea Alignment, Key Message Coverage, Tone of Voice, Missing Requirements, Suggested Direction</span></div>
                                 )}
                               </div>
                             )}
 
                             {/* Draft Review */}
-                            {currentStepIndex >= 5 && (
+                            {stepIndex >= 5 && (
                               <div className="p-4 bg-info/5 rounded-xl border border-info/20">
                                 <h4 className="font-bold text-info flex items-center gap-2 mb-3"><BrainCircuit size={16}/> AI Content Draft Review</h4>
                                 <div className="text-sm font-medium text-text-secondary mb-2">Input: <span className="font-normal">Working Brief, Caption, Image, Video</span></div>
-                                {currentStepIndex >= 6 && (
+                                {stepIndex >= 6 && (
                                   <div className="text-sm font-medium text-info">Output: <span className="font-normal">Key Message Coverage, Product Visibility, CTA Check, Missing Requirements, Revision Suggestions</span></div>
                                 )}
                               </div>
                             )}
 
                             {/* Compliance Check */}
-                            {currentStepIndex >= 7 && (
+                            {stepIndex >= 7 && (
                               <div className="p-4 bg-info/5 rounded-xl border border-info/20">
                                 <h4 className="font-bold text-info flex items-center gap-2 mb-3"><BrainCircuit size={16}/> AI Final Post Compliance Check</h4>
                                 <div className="text-sm font-medium text-text-secondary mb-2">Input: <span className="font-normal">Post URL, Screenshot, Caption</span></div>
-                                {currentStepIndex >= 8 && (
+                                {stepIndex >= 8 && (
                                   <div className="text-sm font-medium text-info">Output: <span className="font-normal">Hashtag Check, Mention Check, Disclosure Check, Link Check, Deliverable Check</span></div>
                                 )}
                               </div>
@@ -152,7 +151,7 @@ export function Scene8Roadmap() {
                         <motion.div className="flex flex-col gap-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                           <div className="inline-block bg-surface-muted text-text-secondary text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full w-fit">Future Capability</div>
                           
-                          {currentStepIndex >= 10 && (
+                          {stepIndex >= 10 && (
                             <div className="p-4 bg-surface-muted rounded-xl border border-border">
                               <h4 className="font-bold text-text-primary mb-2">Inputs</h4>
                               <ul className="text-sm text-text-secondary flex flex-col gap-1 list-disc pl-4">
@@ -165,7 +164,7 @@ export function Scene8Roadmap() {
                             </div>
                           )}
 
-                          {currentStepIndex >= 11 && (
+                          {stepIndex >= 11 && (
                             <div className="p-4 bg-warning/10 rounded-xl border border-warning/20">
                               <h4 className="font-bold text-warning mb-2">Outputs</h4>
                               <ul className="text-sm text-warning font-medium flex flex-col gap-1 list-disc pl-4">

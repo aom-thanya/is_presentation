@@ -6,10 +6,9 @@ import { fadeUpVariants } from "../../design-system/animations";
 import { cn } from "../../design-system/cn";
 import { CheckCircle, X, ArrowRight, Play, Database, CheckSquare } from "lucide-react";
 
-export function Scene7TestCases() {
-  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
-  const isActive = currentSceneIndex === 7;
-
+export function Scene7TestCases({ stepIndex }: { stepIndex: number }) {
+  const { goToStep } = usePresentationStore();
+  
   const testCases = [
     {
       id: 1,
@@ -81,14 +80,12 @@ export function Scene7TestCases() {
     }
   ];
 
-  const isOverview = currentStepIndex === 0;
-  const activeCaseIndex = currentStepIndex > 0 && currentStepIndex <= 5 ? currentStepIndex - 1 : -1;
+  const isOverview = stepIndex === 0;
+  const activeCaseIndex = stepIndex > 0 && stepIndex <= 5 ? stepIndex - 1 : -1;
   const activeCase = activeCaseIndex >= 0 ? testCases[activeCaseIndex] : null;
 
   // Handle Escape key to return to overview without using global Next/Back
   useEffect(() => {
-    if (!isActive) return;
-    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !isOverview) {
         goToStep(0);
@@ -99,10 +96,10 @@ export function Scene7TestCases() {
     
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isActive, isOverview, goToStep]);
+  }, [isOverview, goToStep]);
 
   return (
-    <Scene id="slide7-feature-test-cases" isActive={isActive} theme="light">
+    <Scene id="slide7-feature-test-cases"  theme="light">
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         
         {/* Header (hidden in detail view to save space) */}
