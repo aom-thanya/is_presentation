@@ -1,0 +1,361 @@
+import { Scene } from "../../components/presentation/Scene";
+import { usePresentationStore } from "../../store/presentationStore";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
+import { MessageSquare, Table, FileSpreadsheet, AlertTriangle, CheckCircle, Search, FileText, FileArchive, FolderKanban } from "lucide-react";
+
+export function Scene2Personas() {
+  const { currentSceneIndex, currentStepIndex, goToStep } = usePresentationStore();
+  const isActive = currentSceneIndex === 2;
+
+  // Overview Phase
+  const isOverview = currentStepIndex === 0;
+
+  // Personas Data
+  const personas = [
+    {
+      id: "sales",
+      title: "Sales",
+      role: "Campaign Data Creator",
+      voc: "“ส่ง Brief ไปแล้ว แต่แต่ละทีมยังกลับมาถามข้อมูลเดิม”",
+      icon: MessageSquare,
+      startStep: 1,
+      endStep: 8,
+      pains: [
+        "Requirement อาจตกหล่น",
+        "ไม่มีรูปแบบข้อมูลมาตรฐาน",
+        "ต้องตอบคำถามเดิมหลายครั้ง"
+      ],
+      gains: [
+        "กรอกข้อมูล Campaign ครั้งเดียว",
+        "ข้อมูลครบและเป็นมาตรฐาน",
+        "ทุกทีมเห็น Campaign Context ชุดเดียวกัน"
+      ]
+    },
+    {
+      id: "buyer",
+      title: "Buyer",
+      role: "Influencer Discovery User",
+      voc: "“บางครั้งลูกค้าส่งมาแค่ชื่อหรือรูป ต้องใช้เวลาหาว่าเป็น Influencer คนไหน”",
+      icon: Table,
+      startStep: 9,
+      endStep: 16,
+      pains: [
+        "ค้นหาข้อมูลจากหลายแหล่ง",
+        "ต้องรวบรวม Profile ด้วยตนเอง",
+        "ใช้เวลาสร้าง Shortlist"
+      ],
+      gains: [
+        "ค้นหาจากชื่อหรือรูปภาพ",
+        "เข้าถึง Influencer Profile จากจุดเดียว",
+        "ลดขั้นตอนก่อนการทำ Shortlist"
+      ]
+    },
+    {
+      id: "planner",
+      title: "Planner",
+      role: "Commercial Output User",
+      voc: "“ข้อมูลใน Deal Sheet และ Proposal ต้อง Copy ซ้ำหลายรอบ”",
+      icon: FileSpreadsheet,
+      startStep: 17,
+      endStep: 24,
+      pains: [
+        "ต้องนำข้อมูลจาก Brief มาใส่ใหม่",
+        "เอกสารแต่ละชุดอาจไม่ตรงกัน",
+        "เสี่ยงต่อ Human Error"
+      ],
+      gains: [
+        "Generate Deal Sheet จากข้อมูลในระบบ",
+        "Generate Proposal จาก Campaign Data ชุดเดียวกัน",
+        "ลดการคัดลอกข้อมูลซ้ำ"
+      ]
+    }
+  ];
+
+  const activePersona = personas.find(p => currentStepIndex >= p.startStep && currentStepIndex <= p.endStep);
+  const isSecondaryUsers = currentStepIndex >= 25;
+
+  return (
+    <Scene id="slide2-personas" isActive={isActive} theme="light">
+      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
+        
+        {/* Main Title (Only in overview or secondary users) */}
+        <AnimatePresence mode="wait">
+          {(isOverview || isSecondaryUsers) && (
+            <motion.div
+              key="main-title"
+              className="text-center w-full max-w-3xl"
+              variants={fadeUpVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-text-primary">
+                Persona & Voice of Customer
+              </h2>
+              {isOverview && (
+                <p className="text-xl text-text-secondary leading-relaxed">
+                  ข้อมูล Persona และ Pain Point ได้จากการทบทวน Workflow และการพูดคุยกับผู้ใช้งานที่เกี่ยวข้องกับการทำ Influencer Campaign
+                </p>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Overview Cards */}
+        <AnimatePresence>
+          {isOverview && (
+            <motion.div 
+              className="w-full flex justify-center gap-8 mt-16"
+              variants={staggerContainerVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              {personas.map((persona) => {
+                const Icon = persona.icon;
+                return (
+                  <motion.button
+                    key={persona.id}
+                    className="flex flex-col items-center p-8 bg-surface border border-border rounded-panel shadow-sm w-[300px] hover:-translate-y-2 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group"
+                    onClick={() => goToStep(persona.startStep)}
+                    variants={fadeUpVariants}
+                    layoutId={`persona-card-${persona.id}`}
+                  >
+                    <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Icon size={28} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-text-primary mb-2">{persona.title}</h3>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Detailed Persona View */}
+        <AnimatePresence mode="wait">
+          {!isOverview && !isSecondaryUsers && activePersona && (
+            <motion.div 
+              key={`detail-${activePersona.id}`}
+              className="w-full flex flex-col h-full pt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            >
+              <div className="flex gap-12 w-full h-full">
+                
+                {/* Left side: Persona Info */}
+                <div className="w-1/3 flex flex-col items-start pt-4">
+                  <motion.div 
+                    layoutId={`persona-card-${activePersona.id}`}
+                    className="flex items-center gap-4 px-6 py-3 bg-surface border border-border rounded-pill shadow-sm mb-8 cursor-pointer hover:bg-surface-muted transition-colors"
+                    onClick={() => goToStep(0)}
+                  >
+                    <activePersona.icon size={24} className="text-primary" />
+                    <span className="text-xl font-bold text-primary">{activePersona.title}</span>
+                  </motion.div>
+                  
+                  <motion.h3 
+                    className="text-3xl font-bold text-text-primary mb-2"
+                    variants={fadeUpVariants} initial="initial" animate="animate"
+                  >
+                    {activePersona.role}
+                  </motion.h3>
+
+                  <AnimatePresence>
+                    {currentStepIndex >= activePersona.startStep + 1 && (
+                      <motion.div
+                        className="mt-8 px-8 py-6 bg-primary-soft border border-primary/20 rounded-card relative"
+                        variants={fadeUpVariants} initial="initial" animate="animate"
+                      >
+                        <span className="absolute -top-4 left-6 text-4xl text-primary opacity-30 font-serif">"</span>
+                        <p className="text-lg text-primary font-medium italic relative z-10">
+                          {activePersona.voc.replace(/['"]+/g, '')}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Right side: Pain & Gain & Interactions */}
+                <div className="w-2/3 flex flex-col pl-12 border-l border-border h-full relative">
+                  
+                  <div className="flex w-full gap-8 h-full">
+                    
+                    {/* Pain to Gain List */}
+                    <div className="flex-1 flex flex-col gap-6 pt-4 relative">
+                      {activePersona.pains.map((pain, idx) => {
+                        // Wait, my plan: 
+                        // Step 1: Role + VoC (startStep + 0)
+                        // Step 2: Pain 1 (startStep + 1)
+                        // Step 3: Pain 2 (startStep + 2)
+                        // Step 4: Pain 3 (startStep + 3)
+                        // Step 5: Gain 1 (startStep + 4)
+                        const pStep = activePersona.startStep + 1 + idx;
+                        const gStep = activePersona.startStep + 4 + idx;
+                        const showPain = currentStepIndex >= pStep && currentStepIndex < gStep;
+                        const showGain = currentStepIndex >= gStep;
+
+                        return (
+                          <div key={idx} className="relative h-20 w-full">
+                            <AnimatePresence mode="popLayout">
+                              {showPain && (
+                                <motion.div
+                                  layoutId={`item-${activePersona.id}-${idx}`}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, scale: 0.95 }}
+                                  className="absolute inset-0 flex items-center gap-4 px-6 py-4 bg-red-50 border border-red-200 rounded-card"
+                                >
+                                  <AlertTriangle size={24} className="text-red-500 shrink-0" />
+                                  <span className="text-lg text-red-500 font-medium">{pain}</span>
+                                </motion.div>
+                              )}
+                              {showGain && (
+                                <motion.div
+                                  layoutId={`item-${activePersona.id}-${idx}`}
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  className="absolute inset-0 flex items-center gap-4 px-6 py-4 bg-green-50 border border-green-200 rounded-card shadow-sm"
+                                >
+                                  <CheckCircle size={24} className="text-green-500 shrink-0" />
+                                  <span className="text-lg text-green-500 font-medium">{activePersona.gains[idx]}</span>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Special Animation Area */}
+                    <div className="flex-1 flex items-center justify-center relative bg-surface-muted rounded-panel overflow-hidden border border-border">
+                      
+                      {/* Sales: Structured Brief */}
+                      {activePersona.id === "sales" && currentStepIndex >= activePersona.startStep + 7 && (
+                        <motion.div 
+                          className="w-3/4 bg-surface rounded-card shadow-md border border-border p-6 flex flex-col gap-4"
+                          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                        >
+                          <div className="w-full h-8 bg-primary-soft text-primary font-semibold flex items-center justify-center rounded mb-2">Structured Campaign Brief</div>
+                          <div className="flex gap-4 items-center"><div className="w-16 h-4 bg-surface-muted rounded" /><div className="flex-1 h-8 bg-border rounded" /></div>
+                          <div className="flex gap-4 items-center"><div className="w-16 h-4 bg-surface-muted rounded" /><div className="flex-1 h-8 bg-border rounded" /></div>
+                          <div className="flex gap-4 items-center"><div className="w-16 h-4 bg-surface-muted rounded" /><div className="flex-1 h-8 bg-border rounded" /></div>
+                        </motion.div>
+                      )}
+
+                      {/* Buyer: Sources Merging */}
+                      {activePersona.id === "buyer" && currentStepIndex >= activePersona.startStep + 4 && (
+                        <div className="relative w-full h-full flex items-center justify-center">
+                          <AnimatePresence>
+                            {currentStepIndex < activePersona.startStep + 7 && (
+                              <>
+                                <motion.div exit={{ scale: 0, opacity: 0, x: 50, y: 50 }} className="absolute top-1/4 left-1/4 w-12 h-12 bg-surface shadow rounded-full flex items-center justify-center text-text-subtle"><Search size={20}/></motion.div>
+                                <motion.div exit={{ scale: 0, opacity: 0, x: -50, y: 50 }} className="absolute top-1/4 right-1/4 w-12 h-12 bg-surface shadow rounded-full flex items-center justify-center text-text-subtle"><Table size={20}/></motion.div>
+                                <motion.div exit={{ scale: 0, opacity: 0, x: 0, y: -50 }} className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-12 h-12 bg-surface shadow rounded-full flex items-center justify-center text-text-subtle"><FileSpreadsheet size={20}/></motion.div>
+                              </>
+                            )}
+                          </AnimatePresence>
+                          <AnimatePresence>
+                            {currentStepIndex >= activePersona.startStep + 6 && (
+                              <motion.div 
+                                className="w-64 h-80 bg-surface rounded-card shadow-md border border-border flex flex-col overflow-hidden"
+                                initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+                              >
+                                <div className="h-12 bg-surface-muted flex items-center px-4 border-b border-border text-sm font-medium text-text-subtle">
+                                  <Search size={16} className="mr-2" /> Unified Search
+                                </div>
+                                <div className="p-4 flex flex-col gap-4">
+                                  <div className="flex gap-4 items-center">
+                                    <div className="w-10 h-10 rounded-full bg-primary-soft shrink-0" />
+                                    <div className="flex flex-col gap-2 w-full"><div className="h-3 w-3/4 bg-border rounded" /><div className="h-2 w-1/2 bg-surface-muted rounded" /></div>
+                                  </div>
+                                  <div className="flex gap-4 items-center">
+                                    <div className="w-10 h-10 rounded-full bg-surface-muted shrink-0" />
+                                    <div className="flex flex-col gap-2 w-full"><div className="h-3 w-3/4 bg-border rounded" /><div className="h-2 w-1/2 bg-surface-muted rounded" /></div>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      )}
+
+                      {/* Planner: Auto Generation */}
+                      {activePersona.id === "planner" && currentStepIndex >= activePersona.startStep + 4 && (
+                        <div className="relative w-full h-full flex flex-col items-center justify-center">
+                          <motion.div 
+                            className="w-40 h-32 bg-primary text-primary-foreground rounded-card shadow-md flex items-center justify-center font-bold text-center z-10"
+                            initial={{ y: 0 }}
+                            animate={{ y: currentStepIndex >= activePersona.startStep + 6 ? -60 : 0 }}
+                          >
+                            Campaign<br/>Record
+                          </motion.div>
+
+                          <AnimatePresence>
+                            {currentStepIndex >= activePersona.startStep + 6 && (
+                              <motion.div className="absolute top-[60%] flex gap-8 w-full justify-center">
+                                <motion.div 
+                                  className="w-32 h-40 bg-surface rounded-card shadow-md border border-border flex flex-col items-center p-4"
+                                  initial={{ opacity: 0, y: -40, x: 20 }} animate={{ opacity: 1, y: 0, x: 0 }}
+                                >
+                                  <FileSpreadsheet size={24} className="text-green-500 mb-2" />
+                                  <span className="text-xs font-bold text-center">Deal Sheet</span>
+                                  <div className="mt-auto w-full h-2 bg-green-100 rounded" />
+                                </motion.div>
+                                <motion.div 
+                                  className="w-32 h-40 bg-surface rounded-card shadow-md border border-border flex flex-col items-center p-4"
+                                  initial={{ opacity: 0, y: -40, x: -20 }} animate={{ opacity: 1, y: 0, x: 0 }}
+                                >
+                                  <FileText size={24} className="text-blue-500 mb-2" />
+                                  <span className="text-xs font-bold text-center">Proposal</span>
+                                  <div className="mt-auto w-full h-2 bg-blue-100 rounded" />
+                                </motion.div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Secondary Users */}
+        <AnimatePresence>
+          {isSecondaryUsers && (
+            <motion.div
+              className="mt-16 w-full max-w-3xl flex flex-col items-center bg-surface border border-border rounded-panel p-8 shadow-sm"
+              variants={fadeUpVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <div className="flex gap-8 mb-6">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle"><FileArchive size={28} /></div>
+                  <span className="font-semibold text-text-primary">Project Manager</span>
+                </div>
+                <div className="w-px h-16 bg-border" />
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle"><FolderKanban size={28} /></div>
+                  <span className="font-semibold text-text-primary">Operations</span>
+                </div>
+              </div>
+              <p className="text-xl text-center text-text-secondary leading-relaxed max-w-xl">
+                Project Manager และ Operations receive clear Campaign Information that is ready for the next business step.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </div>
+    </Scene>
+  );
+}
