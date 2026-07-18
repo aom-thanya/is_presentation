@@ -11,7 +11,7 @@ export function Scene5LiveWalkthrough() {
   ];
 
   return (
-    <Scene id="slide5-live-walkthrough" theme="light">
+    <Scene id="slide5-live-walkthrough" theme="light" fullWidth>
       <div className="flex w-full h-full">
         {/* Left Panel: Takeaways */}
         <div className="w-[30%] bg-surface border-r border-border h-full flex flex-col pt-24 px-8 shadow-sm">

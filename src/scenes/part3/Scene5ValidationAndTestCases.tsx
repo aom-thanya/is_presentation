@@ -156,7 +156,10 @@ export function Scene5ValidationAndTestCases() {
                   {testCases.map((tc) => (
                     <motion.div
                       key={tc.id}
-                      onClick={() => setActiveTestCaseId(tc.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTestCaseId(tc.id);
+                      }}
                       className="bg-surface border border-border rounded-panel p-6 shadow-sm hover:shadow-md hover:border-primary/50 cursor-pointer flex flex-col items-start transition-all group"
                       variants={fadeUpVariants}
                     >

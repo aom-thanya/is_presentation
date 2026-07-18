@@ -22,12 +22,7 @@ export const presentationData: PresentationDefinition = {
       totalSteps: 4,
       presenterNote: "Persona and Pain Points"
     },
-    {
-      id: "slide3-value-mapping",
-      title: "From Voice of Customer to Product Value",
-      totalSteps: 1,
-      presenterNote: "Value Mapping"
-    },
+
     {
       id: "slide4-solution-design",
       title: "Solution Design",
