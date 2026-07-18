@@ -18,7 +18,7 @@ export function PresenterControls() {
       className={cn(
         "fixed bottom-[var(--control-safe-area)] left-1/2 -translate-x-1/2 flex items-center gap-2 p-2",
         "bg-surface/94 border border-border shadow-sm backdrop-blur-md rounded-control",
-        "transition-opacity duration-300 opacity-0 hover:opacity-100",
+        "transition-opacity duration-300 opacity-0 hover:opacity-100 z-50",
         {
           "opacity-100": SHOW_PRESENTER_CONTROLS_BY_DEFAULT
         }

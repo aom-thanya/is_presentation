@@ -30,8 +30,8 @@ export function usePresentationNavigation() {
     if (currentStepIndex > 0) {
       goToStep(currentStepIndex - 1);
     } else if (currentSceneIndex > 0) {
-      goToScene(currentSceneIndex - 1);
-      // Wait, goToScene sets step to 0, which is correct when going back to a previous scene, usually we want to start from the beginning of it.
+      const previousScene = presentationData.scenes[currentSceneIndex - 1];
+      goToScene(currentSceneIndex - 1, previousScene.totalSteps - 1);
     }
   }, [isTransitioning, currentSceneIndex, currentStepIndex, goToScene, goToStep]);
 

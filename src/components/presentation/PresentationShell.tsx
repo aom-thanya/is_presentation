@@ -25,7 +25,8 @@ export function PresentationShell({ children }: PresentationShellProps) {
   const handleCanvasClick = (e: MouseEvent<HTMLDivElement>) => {
     // Basic implementation of click navigation (center safe area moves forward)
     // Avoid triggering if clicking on controls or interactive elements inside
-    if ((e.target as HTMLElement).tagName === "BUTTON" || (e.target as HTMLElement).tagName === "A") {
+    const target = e.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
       return;
     }
     goNext();

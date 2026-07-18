@@ -210,7 +210,10 @@ export function Scene2Personas() {
                   <motion.div 
                     layoutId={`persona-card-${activePersona.id}`}
                     className="flex items-center gap-4 px-6 py-3 bg-surface border border-border rounded-pill shadow-sm mb-8 cursor-pointer hover:bg-surface-muted transition-colors"
-                    onClick={() => goToStep(0)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToStep(0);
+                    }}
                   >
                     <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
                       <img src={activePersona.avatar} alt={activePersona.title} className="w-full h-full object-cover" />

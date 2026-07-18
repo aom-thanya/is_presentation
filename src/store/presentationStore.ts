@@ -11,7 +11,7 @@ interface PresentationState {
 
   next: () => void;
   previous: () => void;
-  goToScene: (index: number) => void;
+  goToScene: (index: number, stepIndex?: number) => void;
   goToStep: (index: number) => void;
   resetPresentation: () => void;
   setTransitioning: (value: boolean) => void;
@@ -34,9 +34,9 @@ export const usePresentationStore = create<PresentationState>((set, get) => ({
   },
   previous: () => {},
   
-  goToScene: (index) => set({ 
+  goToScene: (index, stepIndex) => set({ 
     currentSceneIndex: index,
-    currentStepIndex: 0,
+    currentStepIndex: stepIndex !== undefined ? stepIndex : 0,
     direction: index > get().currentSceneIndex ? 1 : -1
   }),
 

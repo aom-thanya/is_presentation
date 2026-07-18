@@ -139,7 +139,7 @@ export function Scene1BusinessProblem() {
 
 
         {/* Horizontal Stepper */}
-        <div className="w-full flex justify-center items-stretch gap-4 mb-8 h-[320px]">
+        <div className="w-full flex justify-center items-stretch gap-4 mb-8 h-[360px]">
           {steps.map((step) => {
             const isActive = activeStep === step.id;
             const isCompleted = step.id < activeStep;
@@ -155,11 +155,11 @@ export function Scene1BusinessProblem() {
                 }}
                 className={cn(
                   "relative flex flex-col items-center cursor-pointer rounded-xl border transition-all duration-500 overflow-hidden",
-                  isActive ? "bg-gradient-to-b from-[#6d5df6] to-[#5a48e5] text-white border-transparent shadow-lg shadow-[#6d5df6]/30 flex-[3] z-10" : 
+                  isActive ? "bg-gradient-to-b from-[#6d5df6] to-[#5a48e5] text-white border-transparent shadow-lg shadow-[#6d5df6]/30 flex-[2] z-10" : 
                   isCompleted ? "bg-white border-[#e4e5eb] text-[#1a1a24] shadow-sm flex-1 hover:border-[#6d5df6]/50" : 
                   "bg-white/50 border-transparent text-[#9a9aa8] flex-1 opacity-70 hover:opacity-100 hover:bg-white"
                 )}
-                style={{ minHeight: isActive ? '320px' : '260px', marginTop: isActive ? '0' : '30px' }}
+                style={{ minHeight: isActive ? '360px' : '300px', marginTop: isActive ? '0' : '30px' }}
               >
                 {/* Step Number Badge */}
                 <div className={cn(
@@ -180,7 +180,7 @@ export function Scene1BusinessProblem() {
                   </div>
                   
                   {/* Role Name */}
-                  <span className="font-bold text-sm mb-2 text-center leading-tight h-[20px]">{step.role}</span>
+                  <span className="font-bold text-lg mb-2 text-center leading-tight h-[28px]">{step.role}</span>
                   
                   {/* Collapsed view text */}
                   {!isActive && (
@@ -311,16 +311,6 @@ export function Scene1BusinessProblem() {
                   </div>
                 </div>
 
-                {/* Final Insight Banner */}
-                <div className="w-full bg-white border border-[#6d5df6]/20 rounded-xl p-3 shadow-sm flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#6d5df6] text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <Lightbulb size={20} />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[#6d5df6] font-bold text-sm">At this scale, even small inefficiencies become significant operational costs.</span>
-                    <span className="text-[#4a4a5a] text-[11px]">This is why we built Brief Management – to streamline the process and save thousands of hours every year.</span>
-                  </div>
-                </div>
 
               </motion.div>
             )}
