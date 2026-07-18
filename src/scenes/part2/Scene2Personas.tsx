@@ -1,7 +1,7 @@
 import { Scene } from "../../components/presentation/Scene";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
-import { MessageSquare, Table, FileSpreadsheet, AlertTriangle, CheckCircle, Search, FileText, FileArchive, FolderKanban } from "lucide-react";
+import { MessageSquare, Table, FileSpreadsheet, AlertTriangle, CheckCircle, Search, FileText } from "lucide-react";
 import salesAvatar from "../../assets/sale.png";
 import buyerAvatar from "../../assets/buyer.png";
 import plannerAvatar from "../../assets/planner.png";
@@ -191,33 +191,7 @@ export function Scene2Personas() {
           )}
         </AnimatePresence>
 
-        {/* Secondary Users in Overview */}
-        <AnimatePresence>
-          {isOverview && (
-            <motion.div
-              className="mt-16 w-full max-w-3xl flex flex-col items-center bg-surface border border-border rounded-panel p-8 shadow-sm"
-              variants={fadeUpVariants}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
-              exit="exit"
-            >
-              <div className="flex gap-8 mb-6">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle"><FileArchive size={28} /></div>
-                  <span className="font-semibold text-text-primary">Project Manager</span>
-                </div>
-                <div className="w-px h-16 bg-border" />
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle"><FolderKanban size={28} /></div>
-                  <span className="font-semibold text-text-primary">Operations</span>
-                </div>
-              </div>
-              <p className="text-xl text-center text-text-secondary leading-relaxed max-w-xl">
-                ได้รับข้อมูลที่สมบูรณ์ นำไปทำงานต่อได้ทันทีโดยไม่ต้องถามซ้ำ
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
 
         {/* Detailed Persona View */}
         <AnimatePresence mode="wait">

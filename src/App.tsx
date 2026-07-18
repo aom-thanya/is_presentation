@@ -3,7 +3,8 @@ import { Scene0Cover } from "./scenes/part1/Scene0Cover";
 import { Scene1BusinessProblem } from "./scenes/part1/Scene1BusinessProblem";
 import { Scene2Personas } from "./scenes/part2/Scene2Personas";
 import { Scene3ValueMapping } from "./scenes/part2/Scene3ValueMapping";
-import { Scene4SolutionAndWalkthrough } from "./scenes/part2/Scene4SolutionAndWalkthrough";
+import { Scene4SolutionDesign } from "./scenes/part2/Scene4SolutionDesign";
+import { Scene5LiveWalkthrough } from "./scenes/part3/Scene5LiveWalkthrough";
 import { Scene5ValidationAndTestCases } from "./scenes/part3/Scene5ValidationAndTestCases";
 import { Scene6RoadmapAndClosing } from "./scenes/part5/Scene6RoadmapAndClosing";
 import { usePresentationStore } from "./store/presentationStore";
@@ -18,9 +19,10 @@ function App() {
     <Scene1BusinessProblem key="1" />,
     <Scene2Personas key="2" />,
     <Scene3ValueMapping key="3" />,
-    <Scene4SolutionAndWalkthrough key="4" />,
-    <Scene5ValidationAndTestCases key="5" />,
-    <Scene6RoadmapAndClosing key="6" />
+    <Scene4SolutionDesign key="4" />,
+    <Scene5LiveWalkthrough key="5" />,
+    <Scene5ValidationAndTestCases key="6" />,
+    <Scene6RoadmapAndClosing key="7" />
   ];
 
   return (

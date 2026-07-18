@@ -30,9 +30,15 @@ export const presentationData: PresentationDefinition = {
     },
     {
       id: "slide4-solution-design",
-      title: "Solution Design & Walkthrough",
+      title: "Solution Design",
       totalSteps: 1,
-      presenterNote: "Solution Design combined with Live Prototype"
+      presenterNote: "Solution Design"
+    },
+    {
+      id: "slide5-live-walkthrough",
+      title: "Live Walkthrough",
+      totalSteps: 1,
+      presenterNote: "Live Prototype Walkthrough"
     },
     {
       id: "slide5-validation-design",

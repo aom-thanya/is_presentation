@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { fadeUpVariants } from "../../design-system/animations";
 import { 
   FileText, MessageSquare, Table, FileSpreadsheet, 
-  FileArchive, FolderKanban, Image as ImageIcon, 
-  AlertTriangle 
+  FileArchive, FolderKanban, Image as ImageIcon 
 } from "lucide-react";
 
 // The 7 roles in the workflow
@@ -18,44 +17,10 @@ const roles = [
   { id: "influencer", name: "Influencer", desc: "Develop Idea, Draft, and Final Content", icon: ImageIcon, docs: ["Idea", "Draft", "Content"] },
 ];
 
-// The 5 Pain Points
-const painPoints = [
-  { 
-    id: "sales-buyer", 
-    activeRoles: ["sales", "buyer"], 
-    pain: "Requirement ไม่ครบหรือเข้าใจไม่ตรงกัน",
-    effect: "ต้องถามกลับและเริ่มงานช้า"
-  },
-  { 
-    id: "buyer", 
-    activeRoles: ["buyer"], 
-    pain: "ค้นหา Influencer จากหลายแหล่ง",
-    effect: "ใช้เวลาสร้าง Shortlist นาน"
-  },
-  { 
-    id: "planner", 
-    activeRoles: ["planner"], 
-    pain: "Copy ข้อมูลไปทำ Deal Sheet และ Proposal",
-    effect: "เกิดงานซ้ำและ Copy Error"
-  },
-  { 
-    id: "pm-ops", 
-    activeRoles: ["pm", "ops"], 
-    pain: "ต้องแปลงข้อมูลเป็น Working Brief ใหม่",
-    effect: "เสี่ยงต่อการตีความคลาดเคลื่อน"
-  },
-  { 
-    id: "all", 
-    activeRoles: roles.map(r => r.id), 
-    pain: "ใช้ข้อมูลคนละไฟล์หรือคนละเวอร์ชัน",
-    effect: "เกิด Version Conflict"
-  }
-];
-
 export function Scene1BusinessProblem() {
   return (
     <Scene id="slide1-business-problem" theme="light">
-      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
+      <div className="flex flex-col items-center justify-center h-full w-full max-w-full mx-auto relative px-8 pb-12">
         
         {/* Title */}
         <motion.h2
@@ -98,42 +63,6 @@ export function Scene1BusinessProblem() {
             );
           })}
         </div>
-
-        {/* Pain Points Summary */}
-        <motion.div 
-          className="w-full max-w-6xl flex flex-wrap justify-center gap-4 mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          {painPoints.map((p, i) => (
-            <div key={i} className="px-4 py-3 bg-red-50 border border-red-100 rounded-card flex items-center gap-3 shadow-sm max-w-[280px]">
-              <AlertTriangle size={18} className="text-red-500 shrink-0" />
-              <div className="flex flex-col">
-                <span className="text-xs font-bold text-red-600 mb-0.5">{p.pain}</span>
-                <span className="text-[10px] text-red-400">{p.effect}</span>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Root Cause Messages */}
-        <motion.div 
-          className="w-full max-w-4xl flex flex-col items-center text-center mt-auto mb-[8vh]"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-text-primary leading-tight">
-            Every handoff requires people to reconstruct <br/>
-            <span className="text-primary">the same campaign context.</span>
-          </h2>
-          <p className="mt-6 text-xl sm:text-2xl text-text-secondary leading-relaxed max-w-3xl">
-            ปัญหาไม่ได้อยู่ที่จำนวนเอกสารเพียงอย่างเดียว
-            แต่อยู่ที่ Campaign Information ยังไม่อยู่ในรูปแบบข้อมูล
-            ที่สามารถนำไปใช้ต่อได้ทันที
-          </p>
-        </motion.div>
 
       </div>
     </Scene>
