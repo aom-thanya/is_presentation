@@ -21,7 +21,7 @@ export function Scene6RoadmapAndClosing() {
   return (
     <Scene id="slide6-roadmap-closing" theme="light">
 
-      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
+      <div className="flex flex-col items-center justify-start h-full pt-[5vh] w-full max-w-full mx-auto relative px-8">
         <AnimatePresence mode="wait">
           
           {/* Roadmap Tab */}
@@ -37,7 +37,7 @@ export function Scene6RoadmapAndClosing() {
               <h2 className="text-3xl sm:text-4xl text-text-primary font-bold mb-4 text-center">Project Roadmap</h2>
               <div className="w-16 h-[3px] rounded-full bg-primary mb-12" />
 
-              <div className="w-full max-w-6xl flex gap-6 h-full pb-8">
+              <div className="w-full max-w-6xl flex items-stretch gap-6 pb-8">
                 
                 {/* Phase 1 */}
                 <div className="flex-1 flex flex-col p-6 bg-surface border-2 border-primary rounded-panel shadow-sm">
@@ -49,7 +49,7 @@ export function Scene6RoadmapAndClosing() {
                   <div className="flex flex-col gap-6">
                     <div className="inline-block bg-success/10 text-success text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full w-fit">Current Phase</div>
                     <ul className="flex flex-col gap-3">
-                      {["Structured Campaign Brief", "Central Campaign Record", "Influencer Discovery", "Auto Deal Sheet", "Auto Proposal", "User Validation"].map((item, i) => (
+                      {["Structured Campaign Brief", "Central Campaign Record", "Influencer Discovery", "Auto Deal Sheet", "Auto Proposal"].map((item, i) => (
                         <li key={i} className="flex items-center gap-3 text-text-primary font-medium text-sm">
                           <CheckCircle size={18} className="text-success shrink-0" /> {item}
                         </li>
@@ -57,7 +57,7 @@ export function Scene6RoadmapAndClosing() {
                     </ul>
                     <div className="mt-auto p-4 bg-primary-soft rounded-xl border border-primary/20">
                       <span className="block text-xs font-bold text-primary uppercase mb-1">Objective</span>
-                      <span className="text-sm font-bold text-primary">พิสูจน์ว่า Campaign Data สามารถถูกสร้างครั้งเดียวและนำไปใช้ต่อได้จริง</span>
+                      <span className="text-sm font-bold text-primary">ลดเวลาการทำงานลง 67%<br/>จาก 3,000 เหลือ 1,000 Working Days ต่อปี</span>
                     </div>
                   </div>
                 </div>
@@ -134,10 +134,9 @@ export function Scene6RoadmapAndClosing() {
               
               {/* Top: Grand Finale Text */}
               <div className="relative z-30 flex flex-col items-center justify-center mt-4 mb-auto">
-                <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.2}} className="text-3xl sm:text-5xl font-black text-[#1a1a24] uppercase tracking-tight">One Campaign.</motion.span>
-                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.4}} className="text-3xl sm:text-5xl font-black text-[#1a1a24] uppercase tracking-tight">One Data.</motion.span>
-                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.6}} className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#6d5df6] to-[#a341f0] uppercase tracking-tight drop-shadow-sm">One Source of Truth.</motion.span>
+                <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">
+                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.2}} className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1a1a24] uppercase tracking-tight">Less Manual Work.</motion.span>
+                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.4}} className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#6d5df6] to-[#a341f0] uppercase tracking-tight drop-shadow-sm">More Time for Better Campaigns.</motion.span>
                 </div>
               </div>
 

@@ -57,7 +57,7 @@ export function Scene5ValidationAndTestCases() {
   return (
     <Scene id="slide5-validation-test-cases" theme="light">
 
-      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
+      <div className="flex flex-col items-center justify-start h-full pt-[5vh] w-full max-w-full mx-auto relative px-8">
         
         <AnimatePresence mode="wait">
           
@@ -144,105 +144,64 @@ export function Scene5ValidationAndTestCases() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-3xl sm:text-4xl text-text-primary font-bold mb-4 text-center">Feature Test Cases</h2>
+              <h2 className="text-3xl sm:text-4xl text-text-primary font-bold mb-3 text-center">Feature Test Cases</h2>
               <div className="w-16 h-[3px] rounded-full bg-primary mb-8" />
 
-              {!activeTestCaseId ? (
-                // Grid View
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl"
-                  variants={staggerContainerVariants} initial="initial" animate="animate"
-                >
-                  {testCases.map((tc) => (
-                    <motion.div
-                      key={tc.id}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTestCaseId(tc.id);
-                      }}
-                      className="bg-surface border border-border rounded-panel p-6 shadow-sm hover:shadow-md hover:border-primary/50 cursor-pointer flex flex-col items-start transition-all group"
-                      variants={fadeUpVariants}
-                    >
-                      <div className="w-10 h-10 bg-surface-muted text-text-muted rounded-full flex items-center justify-center font-bold mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        {tc.id}
-                      </div>
-                      <h3 className="text-xl font-bold text-text-primary mb-2 leading-tight">{tc.title}</h3>
-                      <div className="flex items-center text-sm font-bold text-primary mt-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                        View Details <ArrowRight size={16} className="ml-1" />
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                // Detail View
-                <motion.div 
-                  className="w-full max-w-5xl bg-surface border border-border shadow-lg rounded-3xl flex flex-col overflow-hidden h-[60vh]"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                >
-                  <div className="flex items-center justify-between p-6 bg-surface border-b border-border">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
-                        {activeTestCase?.id}
-                      </div>
-                      <h3 className="text-2xl font-bold text-text-primary">{activeTestCase?.title}</h3>
-                    </div>
-                    <button 
-                      onClick={() => setActiveTestCaseId(null)}
-                      className="w-10 h-10 bg-surface-muted hover:bg-error/10 hover:text-error text-text-secondary rounded-full flex items-center justify-center transition-colors"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
-
-                  <div className="flex-1 flex overflow-hidden">
-                    <div className="w-1/2 p-8 border-r border-border overflow-y-auto bg-surface">
-                      <div className="mb-8">
-                        <div className="flex items-center gap-2 mb-3">
-                          <Play size={18} className="text-primary" />
-                          <h4 className="text-sm font-bold uppercase tracking-wider text-text-secondary">Input</h4>
-                        </div>
-                        <div className="p-4 bg-surface-muted rounded-xl border border-border">
-                          <span className="text-lg font-medium text-text-primary">{activeTestCase?.input}</span>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <Database size={18} className="text-info" />
-                          <h4 className="text-sm font-bold uppercase tracking-wider text-text-secondary">Expected Output</h4>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          {activeTestCase?.outputs.map((out, idx) => (
-                            <div key={idx} className="flex items-center gap-3 p-3 bg-surface border border-border rounded-lg">
-                              <span className="w-5 h-5 bg-info/10 text-info text-xs font-bold rounded-full flex items-center justify-center shrink-0">
-                                {idx + 1}
-                              </span>
-                              <span className="text-md text-text-primary">{out}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="w-1/2 p-8 bg-success/5 overflow-y-auto">
-                      <div className="flex items-center gap-2 mb-5">
-                        <CheckSquare size={18} className="text-success" />
-                        <h4 className="text-sm font-bold uppercase tracking-wider text-text-secondary">Pass Criteria</h4>
-                      </div>
-                      
-                      <div className="flex flex-col gap-3">
-                        {activeTestCase?.criteria.map((crit, idx) => (
-                          <div key={idx} className="flex items-start gap-3 p-4 bg-surface rounded-xl shadow-sm border border-success/20">
-                            <CheckCircle size={20} className="text-success shrink-0 mt-0.5" />
-                            <span className="text-md font-medium text-text-primary">{crit}</span>
+              <div className="w-full max-w-6xl overflow-hidden rounded-xl border border-border shadow-sm bg-surface">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-surface-muted border-b border-border text-xs font-bold text-text-secondary uppercase tracking-wider">
+                      <th className="p-3 w-[25%]">Feature</th>
+                      <th className="p-3 w-[20%]">Input</th>
+                      <th className="p-3 w-[25%]">Expected Output</th>
+                      <th className="p-3 w-[30%]">Pass Criteria</th>
+                    </tr>
+                  </thead>
+                  <motion.tbody 
+                    variants={staggerContainerVariants} 
+                    initial="initial" 
+                    animate="animate"
+                  >
+                    {testCases.map((tc) => (
+                      <motion.tr 
+                        key={tc.id}
+                        className="border-b border-border hover:bg-primary-soft/10 transition-colors"
+                        variants={fadeUpVariants}
+                      >
+                        <td className="p-3 align-top">
+                          <div className="flex items-start gap-3">
+                            <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">{tc.id}</span>
+                            <span className="font-bold text-sm text-text-primary leading-snug">{tc.title}</span>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
+                        </td>
+                        <td className="p-3 align-top">
+                          <span className="text-xs font-medium text-text-secondary leading-snug">{tc.input}</span>
+                        </td>
+                        <td className="p-3 align-top">
+                          <ul className="flex flex-col gap-1.5 text-xs text-text-primary">
+                            {tc.outputs.map((out, i) => (
+                              <li key={i} className="flex items-start gap-2 bg-info/5 p-1.5 rounded-md border border-info/10 leading-snug">
+                                <Database size={12} className="text-info shrink-0 mt-0.5" />
+                                <span>{out}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                        <td className="p-3 align-top">
+                          <ul className="flex flex-col gap-1.5 text-xs text-text-primary">
+                            {tc.criteria.map((crit, i) => (
+                              <li key={i} className="flex items-start gap-2 bg-success/5 p-1.5 rounded-md border border-success/20 leading-snug">
+                                <CheckSquare size={12} className="text-success shrink-0 mt-0.5" />
+                                <span>{crit}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </motion.tbody>
+                </table>
+              </div>
             </motion.div>
           )}
 
