@@ -3,6 +3,9 @@ import { usePresentationStore } from "../../store/presentationStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
 import { MessageSquare, Table, FileSpreadsheet, AlertTriangle, CheckCircle, Search, FileText, FileArchive, FolderKanban } from "lucide-react";
+import salesAvatar from "../../assets/sale.png";
+import buyerAvatar from "../../assets/buyer.png";
+import plannerAvatar from "../../assets/planner.png";
 
 export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
   const { goToStep } = usePresentationStore();
@@ -18,6 +21,7 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
       role: "Campaign Data Creator",
       voc: "“ส่ง Brief ไปแล้ว แต่แต่ละทีมยังกลับมาถามข้อมูลเดิม”",
       icon: MessageSquare,
+      avatar: salesAvatar,
       startStep: 1,
       endStep: 8,
       pains: [
@@ -37,6 +41,7 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
       role: "Influencer Discovery User",
       voc: "“บางครั้งลูกค้าส่งมาแค่ชื่อหรือรูป ต้องใช้เวลาหาว่าเป็น Influencer คนไหน”",
       icon: Table,
+      avatar: buyerAvatar,
       startStep: 9,
       endStep: 16,
       pains: [
@@ -56,6 +61,7 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
       role: "Commercial Output User",
       voc: "“ข้อมูลใน Deal Sheet และ Proposal ต้อง Copy ซ้ำหลายรอบ”",
       icon: FileSpreadsheet,
+      avatar: plannerAvatar,
       startStep: 17,
       endStep: 24,
       pains: [
@@ -75,27 +81,87 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
   const isSecondaryUsers = stepIndex >= 25;
 
   return (
-    <Scene id="slide2-personas"  theme="light">
-      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
+    <Scene id="slide2-personas" theme="light">
+      
+      {/* Full-screen Background & Decorative Elements */}
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen pointer-events-none z-0 overflow-hidden"
+        style={{
+          background: `
+            radial-gradient(
+              circle at 95% 5%,
+              rgba(139, 124, 255, 0.20) 0%,
+              rgba(139, 124, 255, 0.08) 22%,
+              transparent 45%
+            ),
+            radial-gradient(
+              circle at 50% 0%,
+              rgba(109, 93, 246, 0.08) 0%,
+              transparent 40%
+            ),
+            linear-gradient(
+              180deg,
+              #FCFCFF 0%,
+              #F7F8FD 100%
+            )
+          `
+        }}
+      >
+        {/* Left Concentric Circles */}
+        <div className="absolute left-[-150px] top-[40%] -translate-y-1/2">
+          <div className="w-[400px] h-[400px] rounded-full border-[40px] border-primary/5 opacity-10 flex items-center justify-center">
+            <div className="w-[200px] h-[200px] rounded-full border-[20px] border-primary/5" />
+          </div>
+        </div>
+
+        {/* Top-left Grid of Dots */}
+        <div className="absolute left-[8%] top-[15%] opacity-30">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="2" fill="#6D5DF6" />
+            </pattern>
+            <rect width="80" height="60" fill="url(#dots)" />
+          </svg>
+        </div>
+
+        {/* Top-right Quotes */}
+        <div className="absolute right-[8%] top-[20%] opacity-10">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+        </div>
+
+        {/* Swooping Dashed Line */}
+        <div className="absolute top-[45%] left-0 w-full opacity-20">
+          <svg width="100%" height="400" viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M-100,100 C200,300 1240,300 1540,100" stroke="#6D5DF6" strokeWidth="2" strokeDasharray="8 8" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative z-10 px-8">
         
         {/* Main Title (Only in overview or secondary users) */}
         <AnimatePresence mode="wait">
           {(isOverview || isSecondaryUsers) && (
             <motion.div
               key="main-title"
-              className="text-center w-full max-w-3xl"
+              className="text-center w-full max-w-3xl flex flex-col items-center"
               variants={fadeUpVariants}
               initial="initial"
               animate="animate"
               exit="exit"
             >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-text-primary">
-                Persona & Voice of Customer
+              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-[#1A1A24]">
+                Persona & <span style={{ background: "linear-gradient(90deg, #6D5DF6 0%, #8B7CFF 55%, #A99CFF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", color: "transparent" }}>Voice of Customer</span>
               </h2>
               {isOverview && (
-                <p className="text-xl text-text-secondary leading-relaxed">
-                  ข้อมูล Persona และ Pain Point ได้จากการทบทวน Workflow และการพูดคุยกับผู้ใช้งานที่เกี่ยวข้องกับการทำ Influencer Campaign
-                </p>
+                <div className="flex flex-col items-center">
+                  <p className="text-xl text-[#4A4A5A] leading-relaxed mb-8">
+                    ข้อมูล Persona และ Pain Point ได้จากการทบทวน Workflow และการพูดคุยกับผู้ใช้งานที่เกี่ยวข้องกับการทำ Influencer Campaign
+                  </p>
+                  <div className="w-10 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, #6D5DF6 0%, #8B7CFF 55%, #A99CFF 100%)" }} />
+                </div>
               )}
             </motion.div>
           )}
@@ -121,8 +187,12 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
                     variants={fadeUpVariants}
                     layoutId={`persona-card-${persona.id}`}
                   >
-                    <div className="w-16 h-16 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Icon size={28} />
+                    <div className="w-24 h-24 rounded-full bg-surface-muted flex items-center justify-center text-text-subtle mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors overflow-hidden">
+                      <img 
+                        src={persona.avatar} 
+                        alt={persona.title} 
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                      />
                     </div>
                     <h3 className="text-2xl font-bold text-text-primary mb-2">{persona.title}</h3>
                   </motion.button>
@@ -151,7 +221,9 @@ export function Scene2Personas({ stepIndex }: { stepIndex: number }) {
                     className="flex items-center gap-4 px-6 py-3 bg-surface border border-border rounded-pill shadow-sm mb-8 cursor-pointer hover:bg-surface-muted transition-colors"
                     onClick={() => goToStep(0)}
                   >
-                    <activePersona.icon size={24} className="text-primary" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
+                      <img src={activePersona.avatar} alt={activePersona.title} className="w-full h-full object-cover" />
+                    </div>
                     <span className="text-xl font-bold text-primary">{activePersona.title}</span>
                   </motion.div>
                   
