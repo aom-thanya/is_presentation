@@ -205,15 +205,7 @@ export function Scene6RoadmapAndClosing() {
                 </div>
               </div>
 
-              {/* Bottom: Restart Button */}
-              <div className="relative z-50 pointer-events-auto mt-auto flex justify-end w-full max-w-5xl px-8 mb-4">
-                <button 
-                  onClick={resetPresentation}
-                  className="flex items-center gap-2 px-6 py-3 bg-white border border-[#e4e5eb] hover:border-[#6d5df6] hover:text-[#6d5df6] text-[#6a6a7c] rounded-full transition-all font-bold shadow-sm"
-                >
-                  <RefreshCcw size={16} /> Restart Presentation
-                </button>
-              </div>
+
             </motion.div>
           )}
 

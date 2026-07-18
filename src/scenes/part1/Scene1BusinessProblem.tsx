@@ -6,6 +6,9 @@ import {
   FileText, Users, Play, Building, User, MessageSquare, 
   Search, ClipboardList, Send, Smartphone, Clock, ArrowRight, Edit, Lightbulb
 } from "lucide-react";
+import salesAvatar from "../../assets/sale.png";
+import buyerAvatar from "../../assets/buyer.png";
+import plannerAvatar from "../../assets/planner.png";
 
 export function Scene1BusinessProblem() {
   const { currentStepIndex, goToStep } = usePresentationStore();
@@ -25,6 +28,7 @@ export function Scene1BusinessProblem() {
       id: 2,
       role: "Sales",
       icon: MessageSquare,
+      avatar: salesAvatar,
       action: "Requirement Gathering",
       title: "Sales gathers and clarifies requirements",
       details: ["Review the client brief", "Confirm requirements", "Coordinate missing information"],
@@ -34,6 +38,7 @@ export function Scene1BusinessProblem() {
       id: 3,
       role: "Buyer",
       icon: Search,
+      avatar: buyerAvatar,
       action: "Creator Sourcing",
       title: "Buyer sources and negotiates with creators",
       details: ["Creator sourcing", "Availability checking", "Rate negotiation", "Rate card preparation"],
@@ -43,6 +48,7 @@ export function Scene1BusinessProblem() {
       id: 4,
       role: "Planner",
       icon: ClipboardList,
+      avatar: plannerAvatar,
       action: "Proposal Preparation",
       title: "Planner prepares the campaign proposal",
       details: ["Campaign strategy", "Creator shortlist", "Budget allocation", "Media plan"],
@@ -50,15 +56,6 @@ export function Scene1BusinessProblem() {
     },
     {
       id: 5,
-      role: "Proposal",
-      icon: Send,
-      action: "reaches client",
-      title: "Proposal reaches the client",
-      highlight: "≈ 3 Days",
-      message: "Total lead time from receiving the brief to submitting the proposal."
-    },
-    {
-      id: 6,
       role: "Project Manager",
       icon: Users,
       action: "Working Brief",
@@ -66,7 +63,7 @@ export function Scene1BusinessProblem() {
       details: ["Translate the approved proposal into execution details", "Prepare influencer instructions", "Align campaign requirements across teams"]
     },
     {
-      id: 7,
+      id: 6,
       role: "Operations / Influencers",
       icon: Smartphone,
       action: "Coordinate Campaign",
@@ -130,7 +127,7 @@ export function Scene1BusinessProblem() {
               <div className="w-10 h-10 rounded-full bg-[#f0efff] text-[#6d5df6] flex items-center justify-center mb-2">
                 <Building size={20} />
               </div>
-              <span className="font-bold text-xl text-[#1a1a24]">7+</span>
+              <span className="font-bold text-xl text-[#1a1a24]">5</span>
               <span className="text-xs text-[#6a6a7c] text-center">Teams<br/>Involved</span>
             </div>
           </div>
@@ -139,7 +136,7 @@ export function Scene1BusinessProblem() {
 
 
         {/* Horizontal Stepper */}
-        <div className="w-full flex justify-center items-stretch gap-4 mb-8 h-[360px]">
+        <div className="w-full flex justify-center items-stretch gap-4 mb-8 h-[320px]">
           {steps.map((step) => {
             const isActive = activeStep === step.id;
             const isCompleted = step.id < activeStep;
@@ -159,7 +156,7 @@ export function Scene1BusinessProblem() {
                   isCompleted ? "bg-white border-[#e4e5eb] text-[#1a1a24] shadow-sm flex-1 hover:border-[#6d5df6]/50" : 
                   "bg-white/50 border-transparent text-[#9a9aa8] flex-1 opacity-70 hover:opacity-100 hover:bg-white"
                 )}
-                style={{ minHeight: isActive ? '360px' : '300px', marginTop: isActive ? '0' : '30px' }}
+                style={{ minHeight: isActive ? '320px' : '260px', marginTop: isActive ? '0' : '30px' }}
               >
                 {/* Step Number Badge */}
                 <div className={cn(
@@ -172,11 +169,21 @@ export function Scene1BusinessProblem() {
                 <div className="flex flex-col items-center w-full h-full pt-10 pb-4 px-4">
                   {/* Icon */}
                   <div className={cn(
-                    "w-14 h-14 rounded-full flex items-center justify-center mb-3 transition-colors duration-300 shrink-0",
-                    isActive ? "bg-white/10 text-white" : 
-                    isCompleted ? "bg-[#f0efff] text-[#6d5df6]" : "bg-gray-100 text-[#9a9aa8]"
+                    "rounded-full flex items-center justify-center mb-3 transition-all duration-300 shrink-0 overflow-hidden",
+                    isActive ? "w-20 h-20 bg-white/10 text-white" : 
+                    isCompleted ? "w-14 h-14 bg-[#f0efff] text-[#6d5df6]" : "w-14 h-14 bg-gray-100 text-[#9a9aa8]"
                   )}>
-                    <Icon size={24} />
+                    {step.avatar ? (
+                      <img 
+                        src={step.avatar} 
+                        alt={step.role} 
+                        className={cn("w-full h-full object-cover transition-all duration-300", 
+                          isActive ? "" : isCompleted ? "grayscale-0 opacity-90" : "grayscale opacity-60"
+                        )} 
+                      />
+                    ) : (
+                      <Icon size={isActive ? 32 : 24} />
+                    )}
                   </div>
                   
                   {/* Role Name */}
@@ -251,7 +258,7 @@ export function Scene1BusinessProblem() {
         {/* Bottom Section - Reveal on Step 7 */}
         <div className="w-full h-[160px] relative">
           <AnimatePresence>
-            {activeStep === 7 && (
+            {activeStep === 6 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

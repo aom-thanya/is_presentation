@@ -13,7 +13,7 @@ export const presentationData: PresentationDefinition = {
     {
       id: "slide1-business-problem",
       title: "Business Problem",
-      totalSteps: 7,
+      totalSteps: 6,
       presenterNote: "Pain ของแต่ละทีมดูเหมือนเป็นคนละเรื่อง แต่จริง ๆ มี Root Cause เดียวกัน"
     },
     {
