@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { Scene } from "../../components/presentation/Scene";
 import { usePresentationStore } from "../../store/presentationStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "../../design-system/cn";
 import { CheckCircle, BrainCircuit, Database, FileText, Search, Users, FileSpreadsheet, FileArchive, Zap, LineChart, RefreshCcw } from "lucide-react";
 
 export function Scene6RoadmapAndClosing() {
-  const [activeTab, setActiveTab] = useState<'roadmap' | 'closing'>('roadmap');
-  const { resetPresentation } = usePresentationStore();
+  const { resetPresentation, currentStepIndex } = usePresentationStore();
+  const activeTab = currentStepIndex === 0 ? 'roadmap' : 'closing';
 
   // Orbiting Modules for Closing
   const modules = [
@@ -22,28 +20,6 @@ export function Scene6RoadmapAndClosing() {
 
   return (
     <Scene id="slide6-roadmap-closing" theme="light">
-      
-      {/* Tab Navigation */}
-      <div className="absolute top-6 right-8 z-50 flex gap-2 bg-surface p-1.5 rounded-lg border border-border shadow-sm">
-        <button 
-          onClick={() => setActiveTab('roadmap')} 
-          className={cn(
-            "px-6 py-2 rounded-md text-sm font-bold transition-all duration-300", 
-            activeTab === 'roadmap' ? "bg-primary text-primary-foreground shadow-md" : "text-text-secondary hover:bg-surface-muted"
-          )}
-        >
-          Project Roadmap
-        </button>
-        <button 
-          onClick={() => setActiveTab('closing')} 
-          className={cn(
-            "px-6 py-2 rounded-md text-sm font-bold transition-all duration-300", 
-            activeTab === 'closing' ? "bg-primary text-primary-foreground shadow-md" : "text-text-secondary hover:bg-surface-muted"
-          )}
-        >
-          Closing
-        </button>
-      </div>
 
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         <AnimatePresence mode="wait">
@@ -149,36 +125,79 @@ export function Scene6RoadmapAndClosing() {
           {activeTab === 'closing' && (
             <motion.div 
               key="tab-closing"
-              className="flex flex-col items-center justify-center w-full h-full relative"
+              className="flex flex-col items-center justify-between w-full h-full relative pb-6"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
               
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
-                <div className="relative w-[800px] h-[800px] flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border border-dashed border-primary/20 animate-[spin_60s_linear_infinite]" />
-                  <div className="absolute w-[600px] h-[600px] rounded-full border border-dashed border-primary/10 animate-[spin_45s_linear_infinite_reverse]" />
-                  <div className="absolute w-[400px] h-[400px] rounded-full border border-dashed border-primary/5 animate-[spin_30s_linear_infinite]" />
+              {/* Top: Grand Finale Text */}
+              <div className="relative z-30 flex flex-col items-center justify-center mt-4 mb-auto">
+                <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.2}} className="text-3xl sm:text-5xl font-black text-[#1a1a24] uppercase tracking-tight">One Campaign.</motion.span>
+                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.4}} className="text-3xl sm:text-5xl font-black text-[#1a1a24] uppercase tracking-tight">One Data.</motion.span>
+                  <motion.span initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.6}} className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#6d5df6] to-[#a341f0] uppercase tracking-tight drop-shadow-sm">One Source of Truth.</motion.span>
+                </div>
+              </div>
 
+              {/* Center: Convergence Visual */}
+              <div className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-8">
+                
+                <div className="relative w-full max-w-[800px] h-[400px] flex items-center justify-center">
+                  
+                  {/* Central Hub */}
+                  <motion.div 
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.8, type: "spring" }}
+                    className="absolute z-20 flex flex-col items-center justify-center"
+                  >
+                    <div className="w-48 h-48 rounded-full flex flex-col items-center justify-center shadow-[0_0_80px_rgba(109,93,246,0.3)] bg-gradient-to-br from-[#6d5df6] to-[#5a48e5] text-white border-4 border-white/50 backdrop-blur-md">
+                      <Database size={48} className="mb-2 opacity-90" />
+                      <span className="font-bold text-center leading-tight text-lg drop-shadow-md">Central<br/>Campaign<br/>Record</span>
+                    </div>
+                  </motion.div>
+
+                  {/* Modules radiating inwards */}
                   {modules.map((mod, i) => {
-                    const angle = (i / modules.length) * 360;
-                    const radius = 300;
-                    const x = Math.cos(angle * (Math.PI / 180)) * radius;
-                    const y = Math.sin(angle * (Math.PI / 180)) * radius;
+                    const angle = (i / modules.length) * 360 - 90; // Start from top
+                    const radiusX = 320;
+                    const radiusY = 180;
+                    const x = Math.cos(angle * (Math.PI / 180)) * radiusX;
+                    const y = Math.sin(angle * (Math.PI / 180)) * radiusY;
                     
                     return (
                       <motion.div
                         key={mod.id}
-                        className="absolute flex flex-col items-center justify-center"
-                        initial={{ x: x * 1.5, y: y * 1.5 }}
-                        animate={{ x, y }}
-                        transition={{ delay: mod.delay, duration: 1, type: "spring" }}
+                        className="absolute flex flex-col items-center justify-center z-10"
+                        initial={{ x: x * 1.2, y: y * 1.2, opacity: 0 }}
+                        animate={{ x, y, opacity: 1 }}
+                        transition={{ delay: 1.2 + mod.delay * 0.3, duration: 0.8, type: "spring" }}
                       >
-                        <div className="w-12 h-12 bg-gray-900 border border-gray-800 text-white shadow-md rounded-xl flex items-center justify-center mb-2 z-10 relative">
-                          <mod.icon className="text-white" size={20} />
-                          <div className="absolute inset-0 border border-primary rounded-xl animate-ping opacity-20" />
+                        {/* Flowing Data Particle */}
+                        <motion.div
+                          className="absolute w-2 h-2 rounded-full bg-[#6d5df6] shadow-[0_0_10px_rgba(109,93,246,0.8)] z-0"
+                          animate={{
+                            x: [0, -x * 0.65],
+                            y: [0, -y * 0.65],
+                            opacity: [0, 1, 0],
+                            scale: [1, 0.5]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: mod.delay,
+                            ease: "easeInOut"
+                          }}
+                        />
+
+                        {/* Module Card */}
+                        <div className="flex flex-col items-center gap-2 p-3 bg-white/90 backdrop-blur-sm border border-[#e4e5eb] shadow-sm rounded-xl min-w-[110px] z-10">
+                          <div className="w-12 h-12 bg-[#f0efff] text-[#6d5df6] rounded-full flex items-center justify-center">
+                            <mod.icon size={22} />
+                          </div>
+                          <span className="text-[12px] font-bold text-[#1a1a24] text-center leading-tight">{mod.label}</span>
                         </div>
                       </motion.div>
                     );
@@ -186,30 +205,14 @@ export function Scene6RoadmapAndClosing() {
                 </div>
               </div>
 
-              {/* Central Hub Glow */}
-              <div className="absolute z-10 flex flex-col items-center justify-center">
-                <div className="w-64 h-64 rounded-full flex flex-col items-center justify-center shadow-[0_0_120px_rgba(109,93,246,0.6)] bg-primary text-primary-foreground">
-                  <Database size={64} className="mb-2" />
-                  <span className="font-bold text-center leading-tight text-xl">Central<br/>Campaign Record</span>
-                </div>
-              </div>
-
-              {/* Grand Finale Text */}
-              <div className="relative z-30 flex flex-col items-center justify-center mt-[350px]">
-                <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-6 gap-y-2">
-                  <span className="text-4xl sm:text-5xl font-black text-text-primary uppercase tracking-tight">One Campaign.</span>
-                  <span className="text-4xl sm:text-5xl font-black text-text-primary uppercase tracking-tight">One Data.</span>
-                  <span className="text-4xl sm:text-5xl font-black text-primary uppercase tracking-tight">One Source of Truth.</span>
-                </div>
-
-                <div className="flex gap-6 mt-16 z-50 pointer-events-auto">
-                  <button 
-                    onClick={resetPresentation}
-                    className="flex items-center gap-2 px-8 py-4 bg-surface-muted hover:bg-border text-text-secondary hover:text-text-primary rounded-full transition-colors font-bold shadow-sm"
-                  >
-                    <RefreshCcw size={18} /> Restart Presentation
-                  </button>
-                </div>
+              {/* Bottom: Restart Button */}
+              <div className="relative z-50 pointer-events-auto mt-auto flex justify-end w-full max-w-5xl px-8 mb-4">
+                <button 
+                  onClick={resetPresentation}
+                  className="flex items-center gap-2 px-6 py-3 bg-white border border-[#e4e5eb] hover:border-[#6d5df6] hover:text-[#6d5df6] text-[#6a6a7c] rounded-full transition-all font-bold shadow-sm"
+                >
+                  <RefreshCcw size={16} /> Restart Presentation
+                </button>
               </div>
             </motion.div>
           )}

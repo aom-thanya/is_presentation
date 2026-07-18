@@ -6,12 +6,12 @@ import salesAvatar from "../../assets/sale.png";
 import buyerAvatar from "../../assets/buyer.png";
 import plannerAvatar from "../../assets/planner.png";
 
-import { useState } from "react";
+import { usePresentationStore } from "../../store/presentationStore";
 
 export function Scene2Personas() {
-  const [activePersonaId, setActivePersonaId] = useState<string | null>(null);
+  const { currentStepIndex, goToStep } = usePresentationStore();
   
-  const isOverview = activePersonaId === null;
+  const isOverview = currentStepIndex === 0;
 
   const personas = [
     {
@@ -70,7 +70,7 @@ export function Scene2Personas() {
     }
   ];
 
-  const activePersona = personas.find(p => p.id === activePersonaId);
+  const activePersona = isOverview ? null : personas[currentStepIndex - 1];
 
   return (
     <Scene id="slide2-personas" theme="light">
@@ -172,7 +172,7 @@ export function Scene2Personas() {
                   <motion.button
                     key={persona.id}
                     className="flex flex-col items-center p-8 bg-surface border border-border rounded-panel shadow-sm w-[300px] hover:-translate-y-2 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group"
-                    onClick={() => setActivePersonaId(persona.id)}
+                    onClick={() => goToStep(personas.findIndex(p => p.id === persona.id) + 1)}
                     variants={fadeUpVariants}
                     layoutId={`persona-card-${persona.id}`}
                   >
@@ -210,7 +210,7 @@ export function Scene2Personas() {
                   <motion.div 
                     layoutId={`persona-card-${activePersona.id}`}
                     className="flex items-center gap-4 px-6 py-3 bg-surface border border-border rounded-pill shadow-sm mb-8 cursor-pointer hover:bg-surface-muted transition-colors"
-                    onClick={() => setActivePersonaId(null)}
+                    onClick={() => goToStep(0)}
                   >
                     <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
                       <img src={activePersona.avatar} alt={activePersona.title} className="w-full h-full object-cover" />

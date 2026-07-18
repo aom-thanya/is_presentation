@@ -19,7 +19,7 @@ export const presentationData: PresentationDefinition = {
     {
       id: "slide2-personas",
       title: "Persona & Voice of Customer",
-      totalSteps: 1,
+      totalSteps: 4,
       presenterNote: "Persona and Pain Points"
     },
     {
@@ -43,13 +43,13 @@ export const presentationData: PresentationDefinition = {
     {
       id: "slide5-validation-design",
       title: "Validation & Test Cases",
-      totalSteps: 1,
+      totalSteps: 2,
       presenterNote: "Validation Design and Feature Test Cases"
     },
     {
       id: "slide6-roadmap",
       title: "Roadmap & Closing",
-      totalSteps: 1,
+      totalSteps: 2,
       presenterNote: "Project Roadmap and Closing Statement"
     }
   ]

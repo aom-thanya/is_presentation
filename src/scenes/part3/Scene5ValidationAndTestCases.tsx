@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Scene } from "../../components/presentation/Scene";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
-import { cn } from "../../design-system/cn";
 import { CheckCircle, LayoutTemplate, Play, Database, CheckSquare, ArrowRight, X } from "lucide-react";
 
+import { usePresentationStore } from "../../store/presentationStore";
 export function Scene5ValidationAndTestCases() {
-  const [activeTab, setActiveTab] = useState<'validation' | 'testcases'>('validation');
+  const { currentStepIndex } = usePresentationStore();
+  const activeTab = currentStepIndex === 0 ? 'validation' : 'testcases';
   const [activeTestCaseId, setActiveTestCaseId] = useState<number | null>(null);
   
   const metrics = [
@@ -55,28 +56,6 @@ export function Scene5ValidationAndTestCases() {
 
   return (
     <Scene id="slide5-validation-test-cases" theme="light">
-      
-      {/* Tab Navigation */}
-      <div className="absolute top-6 right-8 z-50 flex gap-2 bg-surface p-1.5 rounded-lg border border-border shadow-sm">
-        <button 
-          onClick={() => setActiveTab('validation')} 
-          className={cn(
-            "px-6 py-2 rounded-md text-sm font-bold transition-all duration-300", 
-            activeTab === 'validation' ? "bg-primary text-primary-foreground shadow-md" : "text-text-secondary hover:bg-surface-muted"
-          )}
-        >
-          Validation Design
-        </button>
-        <button 
-          onClick={() => setActiveTab('testcases')} 
-          className={cn(
-            "px-6 py-2 rounded-md text-sm font-bold transition-all duration-300", 
-            activeTab === 'testcases' ? "bg-primary text-primary-foreground shadow-md" : "text-text-secondary hover:bg-surface-muted"
-          )}
-        >
-          Feature Test Cases
-        </button>
-      </div>
 
       <div className="flex flex-col items-center justify-start h-full pt-[8vh] w-full max-w-full mx-auto relative px-8">
         
