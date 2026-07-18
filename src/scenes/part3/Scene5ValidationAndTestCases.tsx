@@ -1,15 +1,13 @@
-import { useState } from "react";
+
 import { Scene } from "../../components/presentation/Scene";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUpVariants, staggerContainerVariants } from "../../design-system/animations";
-import { CheckCircle, LayoutTemplate, Play, Database, CheckSquare, ArrowRight, X } from "lucide-react";
+import { CheckCircle, LayoutTemplate, Database, CheckSquare } from "lucide-react";
 
 import { usePresentationStore } from "../../store/presentationStore";
 export function Scene5ValidationAndTestCases() {
   const { currentStepIndex } = usePresentationStore();
   const activeTab = currentStepIndex === 0 ? 'validation' : 'testcases';
-  const [activeTestCaseId, setActiveTestCaseId] = useState<number | null>(null);
-  
   const metrics = [
     { title: "Task Completion Time", desc: "เวลาทั้งหมดที่ใช้ในการทำงานให้สำเร็จ" },
     { title: "Number of Clarification Questions", desc: "จำนวนคำถามที่เกิดขึ้นระหว่างการส่งต่องาน" },
@@ -52,7 +50,6 @@ export function Scene5ValidationAndTestCases() {
     }
   ];
 
-  const activeTestCase = testCases.find(tc => tc.id === activeTestCaseId);
 
   return (
     <Scene id="slide5-validation-test-cases" theme="light">

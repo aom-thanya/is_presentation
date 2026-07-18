@@ -4,7 +4,7 @@ import { cn } from "../../design-system/cn";
 import { usePresentationStore } from "../../store/presentationStore";
 import { 
   FileText, Users, Play, Building, User, MessageSquare, 
-  Search, ClipboardList, Send, Smartphone, Clock, ArrowRight, Edit, Lightbulb
+  Search, ClipboardList, Smartphone, Clock, ArrowRight, Edit
 } from "lucide-react";
 import salesAvatar from "../../assets/sale.png";
 import buyerAvatar from "../../assets/buyer.png";
@@ -14,7 +14,20 @@ export function Scene1BusinessProblem() {
   const { currentStepIndex, goToStep } = usePresentationStore();
   const activeStep = currentStepIndex + 1;
 
-  const steps = [
+  type StepItem = {
+    id: number;
+    role: string;
+    icon: any;
+    action: string;
+    title: string;
+    details?: string[];
+    message?: string;
+    avatar?: string;
+    time?: string;
+    highlight?: React.ReactNode;
+  };
+
+  const steps: StepItem[] = [
     {
       id: 1,
       role: "Client",

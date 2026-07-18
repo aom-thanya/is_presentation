@@ -1,10 +1,10 @@
 import { Scene } from "../../components/presentation/Scene";
 import { usePresentationStore } from "../../store/presentationStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, BrainCircuit, Database, FileText, Search, Users, FileSpreadsheet, FileArchive, Zap, LineChart, RefreshCcw } from "lucide-react";
+import { CheckCircle, BrainCircuit, Database, FileText, Search, Users, FileSpreadsheet, FileArchive, Zap, LineChart } from "lucide-react";
 
 export function Scene6RoadmapAndClosing() {
-  const { resetPresentation, currentStepIndex } = usePresentationStore();
+  const { currentStepIndex } = usePresentationStore();
   const activeTab = currentStepIndex === 0 ? 'roadmap' : 'closing';
 
   // Orbiting Modules for Closing
