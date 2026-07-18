@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export function Scene0Cover({ stepIndex }: { stepIndex: number }) {
+export function Scene0Cover() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isClient, setIsClient] = useState(false);
@@ -350,17 +350,15 @@ export function Scene0Cover({ stepIndex }: { stepIndex: number }) {
 
         {/* Scroll Instruction */}
         <AnimatePresence>
-          {stepIndex >= 0 && (
-            <motion.div
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-[#9CA3AF] font-bold tracking-widest uppercase flex flex-col items-center gap-2 z-50"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ delay: 1, duration: 0.8 }}
-            >
-              Scroll or Click to begin
-            </motion.div>
-          )}
+          <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-[#9CA3AF] font-bold tracking-widest uppercase flex flex-col items-center gap-2 z-50"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            Scroll or Click to begin
+          </motion.div>
         </AnimatePresence>
       </div>
     </Scene>
